@@ -8,15 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedPage = 0
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        HStack {
+            Circle()
+                .fill(selectedPage == 0 ? Color.black : Color.gray)
+            Circle()
+                .fill(selectedPage == 1 ? Color.black : Color.gray)
         }
-        .padding()
-    }
+        
+        TabView(selection: $selectedPage){
+            Text("First page").tag(0)
+            Text("Second page").tag(1)
+        }
+        .tabViewStyle(.page)
+        .indexViewStyle(.page)
+        
+        
+                    }
 }
 
 #Preview {
