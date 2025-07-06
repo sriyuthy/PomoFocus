@@ -14,6 +14,9 @@
 		0CA62BFA2E1629BC00FD560C /* PomoFocusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62BF92E1629BC00FD560C /* PomoFocusTests.swift */; };
 		0CA62C042E1629BC00FD560C /* PomoFocusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62C032E1629BC00FD560C /* PomoFocusUITests.swift */; };
 		0CA62C062E1629BC00FD560C /* PomoFocusUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62C052E1629BC00FD560C /* PomoFocusUITestsLaunchTests.swift */; };
+		0CA62C152E19EB9B00FD560C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62C142E19EB9B00FD560C /* HomeView.swift */; };
+		0CA62C172E19EC5400FD560C /* MemoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62C162E19EC5400FD560C /* MemoriesView.swift */; };
+		0CA62C192E19EFD700FD560C /* PomodoroModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62C182E19EFD700FD560C /* PomodoroModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		0CA62BFF2E1629BC00FD560C /* PomoFocusUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PomoFocusUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA62C032E1629BC00FD560C /* PomoFocusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomoFocusUITests.swift; sourceTree = "<group>"; };
 		0CA62C052E1629BC00FD560C /* PomoFocusUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomoFocusUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0CA62C142E19EB9B00FD560C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0CA62C162E19EC5400FD560C /* MemoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesView.swift; sourceTree = "<group>"; };
+		0CA62C182E19EFD700FD560C /* PomodoroModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,9 @@
 			children = (
 				0CA62BE82E1629BA00FD560C /* PomoFocusApp.swift */,
 				0CA62BEA2E1629BA00FD560C /* ContentView.swift */,
+				0CA62C142E19EB9B00FD560C /* HomeView.swift */,
+				0CA62C182E19EFD700FD560C /* PomodoroModel.swift */,
+				0CA62C162E19EC5400FD560C /* MemoriesView.swift */,
 				0CA62BEC2E1629BC00FD560C /* Assets.xcassets */,
 				0CA62BEE2E1629BC00FD560C /* Preview Content */,
 			);
@@ -257,6 +266,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CA62C152E19EB9B00FD560C /* HomeView.swift in Sources */,
+				0CA62C172E19EC5400FD560C /* MemoriesView.swift in Sources */,
+				0CA62C192E19EFD700FD560C /* PomodoroModel.swift in Sources */,
 				0CA62BEB2E1629BA00FD560C /* ContentView.swift in Sources */,
 				0CA62BE92E1629BA00FD560C /* PomoFocusApp.swift in Sources */,
 			);

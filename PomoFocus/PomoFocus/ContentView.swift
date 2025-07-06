@@ -41,12 +41,17 @@ struct ContentView: View {
                 .animation(.easeInOut(duration: 0.1), value: selectedPage)
         }
         
-        TabView(selection: $selectedPage){
-            Text("First page").tag(0)
-            Text("Second page").tag(1)
+        TabView(selection: $selectedPage) {
+            
+            HomeView()
+                    
+            MemoriesView()
+
         }
         .tabViewStyle(.page)
         .indexViewStyle(.page)
+        
+        
         
         
                     }
