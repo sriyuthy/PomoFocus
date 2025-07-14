@@ -11,7 +11,7 @@ import SwiftUI
 struct MemoriesView: View {
     var body: some View {
         
-        Text("Welcome to Memories").tag(1)
+        Text("Welcome to Memories")
         
     }
     

@@ -12,10 +12,9 @@ struct HomeView: View {
     var body: some View {
         
         let pomodoroModel = PomodoroModel()
-        
-        Text("Welcome to Home").tag(0)
-        
-        Text(pomodoroModel.timerStringValue).tag(0)
+                
+        Text(pomodoroModel.timerStringValue)
+            .font(.system(size: 45, weight: .light))
             
         
 
