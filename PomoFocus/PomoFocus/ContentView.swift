@@ -58,8 +58,7 @@ struct ContentView: View {
                 MemoriesView().tag(1)
                 
             }
-            .tabViewStyle(.page)
-            .indexViewStyle(.page)
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) //hide dots at the bottom
             
             //Handles tab expansion/shrinking
             .onChange(of: selectedPage) {
