@@ -68,7 +68,7 @@ struct ContentView: View {
                 }
                 
                 //Tab shrinks after 2 seconds if selected page and new page are the same
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
                     
                     if selectedPage == newValue {
                         withAnimation(.easeInOut(duration: 0.2)) {
@@ -81,7 +81,6 @@ struct ContentView: View {
                 
             }
         }
-        
         
                     }
 }
