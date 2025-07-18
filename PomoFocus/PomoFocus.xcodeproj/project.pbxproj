@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C68A1B22E28443A00713581 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A1B12E28443A00713581 /* LoginView.swift */; };
 		0CA62BE92E1629BA00FD560C /* PomoFocusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62BE82E1629BA00FD560C /* PomoFocusApp.swift */; };
 		0CA62BEB2E1629BA00FD560C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62BEA2E1629BA00FD560C /* ContentView.swift */; };
 		0CA62BED2E1629BC00FD560C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CA62BEC2E1629BC00FD560C /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C68A1B12E28443A00713581 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		0CA62BE52E1629BA00FD560C /* PomoFocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomoFocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA62BE82E1629BA00FD560C /* PomoFocusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomoFocusApp.swift; sourceTree = "<group>"; };
 		0CA62BEA2E1629BA00FD560C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				0CA62C162E19EC5400FD560C /* MemoriesView.swift */,
 				0CA62BEC2E1629BC00FD560C /* Assets.xcassets */,
 				0CA62BEE2E1629BC00FD560C /* Preview Content */,
+				0C68A1B12E28443A00713581 /* LoginView.swift */,
 			);
 			path = PomoFocus;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C68A1B22E28443A00713581 /* LoginView.swift in Sources */,
 				0CA62C152E19EB9B00FD560C /* HomeView.swift in Sources */,
 				0CA62C172E19EC5400FD560C /* MemoriesView.swift in Sources */,
 				0CA62C192E19EFD700FD560C /* PomodoroModel.swift in Sources */,
