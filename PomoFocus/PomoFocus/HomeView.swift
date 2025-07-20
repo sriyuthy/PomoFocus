@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var pomodoroModel = PomodoroModel()
+    
     @State var textInput = ""
     //True if user is editing timer
     @State var isEditing = false
@@ -21,6 +22,9 @@ struct HomeView: View {
         return !isEditing && !isEditingText
         
     }
+    
+    //True if timer is started
+    @State var isStarted = false
     
     var body: some View {
         
@@ -47,7 +51,7 @@ struct HomeView: View {
                     //If editing, show rectangle
                     if isEditing {
                         RoundedRectangle(cornerRadius: 15)
-                            .fill(Color.gray.opacity(0.2))
+                            .fill(Color.gray)
                             .frame(width: 320, height: 200)
                         
                         //Layout for min/sec wheels
@@ -105,17 +109,48 @@ struct HomeView: View {
                     .focused($isEditingText)
                 
                 //Dots
-                Circle()
-                    .frame(width: 15, height: 15)
+                HStack(spacing: 15) {
+                    Circle()
+                        .fill(pomodoroModel.sessionDots[0] == true ? Color.black : Color.gray)
+                        .frame(width: 15, height: 15)
+                        .offset(y: 190)
+                                    
+                    Circle()
+                        .fill(pomodoroModel.sessionDots[1] == true ? Color.black : Color.gray)
+                        .frame(width: 15, height: 15)
+                        .offset(y: 190)
                     
+                    Circle()
+                        .fill(pomodoroModel.sessionDots[2] == true ? Color.black : Color.gray)
+                        .frame(width: 15, height: 15)
+                        .offset(y: 190)
+                    
+                    Circle()
+                        .fill(pomodoroModel.sessionDots[3] == true ? Color.black : Color.gray)
+                        .frame(width: 15, height: 15)
+                        .offset(y: 190)
+                    
+                }
+                .padding(.horizontal, 5)
+                                    
                 //Pushes everything afterwards down
                 Spacer()
                 
                 //Tap to continue
-                if isReady {
-                    Text("Tap to continue")
-                        .padding(.bottom)
-
+                if pomodoroModel.isStarted == false {
+                    Button("Tap to continue") {
+                        pomodoroModel.startTimer()
+                    }
+                    .padding(.bottom)
+                    .foregroundColor(.gray)
+                }
+                
+                if pomodoroModel.isStarted {
+                    Button("Tap to stop") {
+                        pomodoroModel.stopTimer()
+                    }
+                    .padding(.bottom)
+                    .foregroundColor(.gray)
                 }
                             }
         }
