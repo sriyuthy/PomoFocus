@@ -19,6 +19,14 @@ class PomodoroModel: ObservableObject {
     @Published var minute: Int = 30
     @Published var second: Int = 0
     
+    @Published var totalSeconds: Int = 0
+    @Published var staticTotalSeconds: Int = 0
+    
+    private var timer: Timer?
+    
+    @Published var completedSessions: Int = 0
+    @Published var sessionDots: [Bool] = Array(repeating:false, count: 4)
+    
     //Update display string with minutes and seconds
     func updateTimerString() {
         //Converts to formatted string
@@ -52,4 +60,76 @@ class PomodoroModel: ObservableObject {
         
     }
     
+    func completeSession() {
+        
+        if completedSessions < sessionDots.count {
+            
+            sessionDots[completedSessions] = true
+            completedSessions += 1
+            
+        }
+        
+    }
+    
+    func resetSessions() {
+        
+        completedSessions = 0
+        sessionDots = Array(repeating: false, count: 4)
+        
+    }
+    
+    //update timer values
+    func updateTimer() {
+        totalSeconds -= 1
+        hour = totalSeconds / 3600
+        minute = (totalSeconds / 60) % 60
+        second = totalSeconds % 60
+        updateTimerString()
+        
+        //If timer runs out, print "Finished"
+        if hour == 0 && minute == 0 && second == 0 {
+            isStarted = false
+            print("Finished")
+            completeSession()
+        }
+    }
+    
+    //Method to start timer
+    func startTimer() {
+        //if timer is already started, return from method
+        if isStarted {
+            return
+        }
+        
+        //Calculates total amount of seconds
+        totalSeconds = (hour * 3600) + (minute * 60)
+        staticTotalSeconds = totalSeconds
+        
+        //set timer object to update timer every second
+        isStarted = true
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            self.updateTimer()
+            
+        }
+    }
+    
+        
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+        
+        isStarted = false
+    }
+    
+    func addDots() {
+        
+        
+        
+    }
+        
+        
+        
+        
+        
 }
+

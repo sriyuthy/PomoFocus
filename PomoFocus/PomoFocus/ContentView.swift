@@ -82,7 +82,7 @@ struct ContentView: View {
             }
         }
         
-                    }
+    }
 }
 
 #Preview {
