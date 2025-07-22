@@ -15,9 +15,11 @@ class PomodoroModel: ObservableObject {
     @Published var timerStringValue: String = "30:00"
     @Published var isStarted: Bool = false
     
-    @Published var hour: Int = 0
     @Published var minute: Int = 30
     @Published var second: Int = 0
+    
+    @Published var originalMin: Int = 0
+    @Published var originalSec: Int = 0
     
     @Published var totalSeconds: Int = 0
     @Published var staticTotalSeconds: Int = 0
@@ -28,12 +30,23 @@ class PomodoroModel: ObservableObject {
     @Published var sessionDots: [Bool] = Array(repeating:false, count: 4)
     
     //Update display string with minutes and seconds
-    func updateTimerString() {
+    func updateTimerString(minute: Int, second: Int) {
         //Converts to formatted string
         let minStr = String(format: "%02d", minute) // % - format specifier (substitute val), 0 - padding with leading zeroes, 2 - num digits, d - decimal integer
         let secStr = String(format: "%02d", second)
         //Update display string
         timerStringValue = "\(minStr):\(secStr)"
+        
+        //print(timerStringValue)
+        
+    }
+    
+    func updateStandardTime(minute: Int, second: Int) {
+        
+        originalMin = minute
+        originalSec = second
+        //print("updated original times with \(minute) and \(second)")
+        
         
     }
     
@@ -46,7 +59,7 @@ class PomodoroModel: ObservableObject {
             
             self.minute = parts[0]
             self.second = parts[1]
-            updateTimerString()
+            updateTimerString(minute: minute, second: second)
             
         }
     }
@@ -56,20 +69,30 @@ class PomodoroModel: ObservableObject {
         
         self.minute = minute
         self.second = second
-        updateTimerString()
+        updateStandardTime(minute: minute, second: second)
+        updateTimerString(minute: minute, second: second)
+        
+    }
+    
+    func resetForNextSession() {
+        
+        //print("resetting for next session")
+        //print("original min is \(originalMin) and original second is \(originalSec)")
+        updateTimerString(minute: originalMin, second: originalSec)
+        setTime(minute: originalMin, second: originalSec)
         
     }
     
     func completeSession() {
         
-        if completedSessions < sessionDots.count {
-            
-            sessionDots[completedSessions] = true
-            completedSessions += 1
-            
-        }
+        
+        sessionDots[completedSessions] = true
+        completedSessions += 1
+        //print("Completed sessions: \(completedSessions)")
+        resetForNextSession()
         
     }
+    
     
     func resetSessions() {
         
@@ -81,16 +104,22 @@ class PomodoroModel: ObservableObject {
     //update timer values
     func updateTimer() {
         totalSeconds -= 1
-        hour = totalSeconds / 3600
         minute = (totalSeconds / 60) % 60
         second = totalSeconds % 60
-        updateTimerString()
+        updateTimerString(minute: minute, second: second)
+        
+        
+        if minute == 0 && second == 0 {
+            isStarted = false
+            stopTimer()
+            completeSession()
+        }
         
         //If timer runs out, print "Finished"
-        if hour == 0 && minute == 0 && second == 0 {
-            isStarted = false
+        if completedSessions == sessionDots.count {
+            
             print("Finished")
-            completeSession()
+            
         }
     }
     
@@ -102,9 +131,9 @@ class PomodoroModel: ObservableObject {
         }
         
         //Calculates total amount of seconds
-        totalSeconds = (hour * 3600) + (minute * 60)
+        totalSeconds = (minute * 60) + second
         staticTotalSeconds = totalSeconds
-        
+                
         //set timer object to update timer every second
         isStarted = true
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in

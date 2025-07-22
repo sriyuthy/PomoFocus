@@ -102,10 +102,10 @@
 		0CA62BE72E1629BA00FD560C /* PomoFocus */ = {
 			isa = PBXGroup;
 			children = (
-				0CA62BE82E1629BA00FD560C /* PomoFocusApp.swift */,
 				0CA62BEA2E1629BA00FD560C /* ContentView.swift */,
-				0CA62C142E19EB9B00FD560C /* HomeView.swift */,
 				0CA62C182E19EFD700FD560C /* PomodoroModel.swift */,
+				0CA62BE82E1629BA00FD560C /* PomoFocusApp.swift */,
+				0CA62C142E19EB9B00FD560C /* HomeView.swift */,
 				0CA62C162E19EC5400FD560C /* MemoriesView.swift */,
 				0CA62BEC2E1629BC00FD560C /* Assets.xcassets */,
 				0CA62BEE2E1629BC00FD560C /* Preview Content */,
