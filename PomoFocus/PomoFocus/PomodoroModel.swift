@@ -12,10 +12,10 @@ class PomodoroModel: ObservableObject {
     //Timer Properties
     //Published - re-render any view that uses this when the value changes
     @Published var progress: CGFloat = 1
-    @Published var timerStringValue: String = "30:00"
+    @Published var timerStringValue: String = "25:00"
     @Published var isStarted: Bool = false
     
-    @Published var minute: Int = 30
+    @Published var minute: Int = 25
     @Published var second: Int = 0
     
     @Published var originalMin: Int = 0
@@ -113,6 +113,7 @@ class PomodoroModel: ObservableObject {
             isStarted = false
             stopTimer()
             completeSession()
+            startBreakTimer()
         }
         
         //If timer runs out, print "Finished"
@@ -151,6 +152,12 @@ class PomodoroModel: ObservableObject {
     }
     
     func addDots() {
+        
+        
+        
+    }
+    
+    func startBreakTimer() {
         
         
         

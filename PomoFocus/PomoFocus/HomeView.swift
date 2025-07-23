@@ -9,19 +9,31 @@ import Foundation
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var pomodoroModel = PomodoroModel()
+    
+    
+    //Creates environment object for page state
+    @EnvironmentObject var pageState : PageState
+    
+    //Shared instnace of pomodoro model
+    @ObservedObject var pomodoroModel : PomodoroModel
     
     @State var textInput = ""
-    //True if user is editing timer
-    @State var isEditing = false
+    
     //True if user is editing text field
     @FocusState var isEditingText: Bool
+    
+    //Shared variable for tracking glass effect
+    @Binding var showGlassEffect: Bool
+    
     //True if user is not editing aspects of timer
     var isReady: Bool {
         
-        return !isEditing && !isEditingText
+        return !pageState.isEditing && !isEditingText
         
     }
+    
+    //for tab view
+    @State private var selectedTab = 0
     
     //True if timer is started
     @State var isStarted = false
@@ -29,16 +41,15 @@ struct HomeView: View {
     var body: some View {
         
         ZStack() {
-            
             //Click off menu to finish editing covers entire background
-            if isEditing {
+            if pageState.isEditing {
                 //Invisible
                 Color.black.opacity(0.001)
                     .ignoresSafeArea()
                     .onTapGesture {
                         //Exit editing mode when tapping the background
                         pomodoroModel.setTime(minute: pomodoroModel.minute, second: pomodoroModel.second)
-                        isEditing = false
+                        pageState.isEditing = false
                     }
             }
             
@@ -49,10 +60,15 @@ struct HomeView: View {
                 ZStack() {
                     
                     //If editing, show rectangle
-                    if isEditing {
+                    if pageState.isEditing {
+                        
                         RoundedRectangle(cornerRadius: 15)
                             .fill(Color.gray)
                             .frame(width: 320, height: 200)
+                        
+                        //user sees message when they are editing picker
+                        Text("Swipe to edit break timer")
+                            .offset(y: 360)
                         
                         //Layout for min/sec wheels
                         HStack(spacing: 10) {
@@ -81,24 +97,28 @@ struct HomeView: View {
                         .onTapGesture {
                             //Do nothing
                         }
-                    }
+                        
+                        
+                    } //if statement ending
                     else {
                         //Default timer string
                         Text(pomodoroModel.timerStringValue)
                             .font(.system(size: 80, weight: .bold))
-                            //when you press down on timer, goes into edit mode
+                        //when you press down on timer, goes into edit mode
                             .onLongPressGesture {
                                 
                                 //haptic feedback
                                 let impact = UIImpactFeedbackGenerator(style: .medium)
                                 impact.impactOccurred()
                                 
-                                isEditing = true
+                                pageState.isEditing = true
                             }
-                    }
-                }
+                    } //else ending
+                } //ZStack ending
                 .frame(height: 200)
                 .offset(y: 275)
+                
+                
                 
                 //Task description editor
                 TextField("Enter task description", text: $textInput)
@@ -114,7 +134,7 @@ struct HomeView: View {
                         .fill(pomodoroModel.sessionDots[0] == true ? Color.black : Color.gray)
                         .frame(width: 15, height: 15)
                         .offset(y: 190)
-                                    
+                    
                     Circle()
                         .fill(pomodoroModel.sessionDots[1] == true ? Color.black : Color.gray)
                         .frame(width: 15, height: 15)
@@ -132,28 +152,16 @@ struct HomeView: View {
                     
                 }
                 .padding(.horizontal, 5)
-                                    
+                
                 //Pushes everything afterwards down
                 Spacer()
                 
-                //Tap to continue
-                if pomodoroModel.isStarted == false {
-                    Button("Tap to continue") {
-                        pomodoroModel.startTimer()
-                    }
-                    .padding(.bottom)
-                    .foregroundColor(.gray)
-                }
-                
-                if pomodoroModel.isStarted {
-                    Button("Tap to stop") {
-                        pomodoroModel.stopTimer()
-                    }
-                    .padding(.bottom)
-                    .foregroundColor(.gray)
-                }
-                            }
-        }
-        .animation(.easeInOut, value: isEditing)
+            } //VStack ending - main vertical layout
+            .animation(.easeInOut, value: pageState.isEditing)
+            
+        } //ZStack ending - root
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeArea()
+    
     }
 }
