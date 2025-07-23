@@ -10,16 +10,20 @@ import SwiftUI
 
 struct HomeView: View {
     
+    
     //Creates environment object for page state
     @EnvironmentObject var pageState : PageState
     
-    //Creates instance of pomodoro model
-    @StateObject private var pomodoroModel = PomodoroModel()
+    //Shared instnace of pomodoro model
+    @ObservedObject var pomodoroModel : PomodoroModel
     
     @State var textInput = ""
     
     //True if user is editing text field
     @FocusState var isEditingText: Bool
+    
+    //Shared variable for tracking glass effect
+    @Binding var showGlassEffect: Bool
     
     //True if user is not editing aspects of timer
     var isReady: Bool {
@@ -34,10 +38,9 @@ struct HomeView: View {
     //True if timer is started
     @State var isStarted = false
     
-        var body: some View {
+    var body: some View {
         
         ZStack() {
-            
             //Click off menu to finish editing covers entire background
             if pageState.isEditing {
                 //Invisible
@@ -48,8 +51,7 @@ struct HomeView: View {
                         pomodoroModel.setTime(minute: pomodoroModel.minute, second: pomodoroModel.second)
                         pageState.isEditing = false
                     }
-                
-                            }
+            }
             
             //Main vertical layout
             VStack() {
@@ -97,12 +99,12 @@ struct HomeView: View {
                         }
                         
                         
-                    }
+                    } //if statement ending
                     else {
                         //Default timer string
                         Text(pomodoroModel.timerStringValue)
                             .font(.system(size: 80, weight: .bold))
-                            //when you press down on timer, goes into edit mode
+                        //when you press down on timer, goes into edit mode
                             .onLongPressGesture {
                                 
                                 //haptic feedback
@@ -111,8 +113,8 @@ struct HomeView: View {
                                 
                                 pageState.isEditing = true
                             }
-                    }
-                }
+                    } //else ending
+                } //ZStack ending
                 .frame(height: 200)
                 .offset(y: 275)
                 
@@ -132,7 +134,7 @@ struct HomeView: View {
                         .fill(pomodoroModel.sessionDots[0] == true ? Color.black : Color.gray)
                         .frame(width: 15, height: 15)
                         .offset(y: 190)
-                                    
+                    
                     Circle()
                         .fill(pomodoroModel.sessionDots[1] == true ? Color.black : Color.gray)
                         .frame(width: 15, height: 15)
@@ -150,33 +152,16 @@ struct HomeView: View {
                     
                 }
                 .padding(.horizontal, 5)
-                                    
+                
                 //Pushes everything afterwards down
                 Spacer()
                 
-                //Tap to continue
-                if !pageState.isEditing && !isEditingText{
-                    
-                    if pomodoroModel.isStarted == false {
-                        Button("Tap to continue") {
-                            pomodoroModel.startTimer()
-                        }
-                        .padding(.bottom)
-                        .foregroundColor(.gray)
-                    }
-                    
-                    if pomodoroModel.isStarted {
-                        Button("Tap to stop") {
-                            pomodoroModel.stopTimer()
-                        }
-                        .padding(.bottom)
-                        .foregroundColor(.gray)
-                    }
-
-                    
-                }
-                                            }
-        }
-        .animation(.easeInOut, value: pageState.isEditing)
+            } //VStack ending - main vertical layout
+            .animation(.easeInOut, value: pageState.isEditing)
+            
+        } //ZStack ending - root
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeArea()
+    
     }
 }
