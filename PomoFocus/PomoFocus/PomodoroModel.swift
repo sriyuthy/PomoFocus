@@ -113,6 +113,7 @@ class PomodoroModel: ObservableObject {
             isStarted = false
             stopTimer()
             completeSession()
+            startBreakTimer()
         }
         
         //If timer runs out, print "Finished"
@@ -151,6 +152,12 @@ class PomodoroModel: ObservableObject {
     }
     
     func addDots() {
+        
+        
+        
+    }
+    
+    func startBreakTimer() {
         
         
         

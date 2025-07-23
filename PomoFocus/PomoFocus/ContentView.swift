@@ -12,6 +12,9 @@ struct ContentView: View {
     @State private var selectedPage = 0
     //Tracks if tabs at top should be expanded or not (20 or 10)
     @State private var isExpanded = true
+    //Creates instance of page state class
+    @StateObject private var pageState = PageState()
+    
     
     var body: some View {
         //positioning of tabs
@@ -53,11 +56,19 @@ struct ContentView: View {
             //Tab view to swipe between pages
             TabView(selection: $selectedPage) {
                 
-                HomeView().tag(0)
+                //home view tracks page state
+                HomeView()
+                    .environmentObject(pageState)
+                    .tag(0)
                 
+                //if user is editing the timer they can swipe to the otherwise hidden break timer
+                if pageState.isEditing {
+                    BreakView().tag(0)
+                }
+
                 MemoriesView().tag(1)
                 
-            }
+                            }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) //hide dots at the bottom
             
             //Handles tab expansion/shrinking
