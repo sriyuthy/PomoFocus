@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-//test test test
+
 struct ContentView: View {
     //selected page tracks home as 0 and memories as 1
     @State private var selectedPage = 0
@@ -19,13 +19,15 @@ struct ContentView: View {
     
     @StateObject private var pomodoroModel = PomodoroModel()
     
-    @State private var exitEmjoji = "🆇"
+    @State private var exitEmjoji = "Ⓧ"
+
     
     @Environment(\.scenePhase) private var scenePhase
     
     @State private var justOpened = false
     
-    
+    @State private var showText = false
+        
     var body: some View {
         //positioning of tabs
         ZStack(alignment: .top) {
@@ -161,16 +163,29 @@ struct ContentView: View {
                         
                         if showGlassEffect == true {
                             
+                            //exit emoji
                             Button(action: {
                                 showGlassEffect = false
+                                
                                 pomodoroModel.resetForNextSession()
-                            }) {
-                                Text(exitEmjoji)
-                                    .font(.system(size: 30))
+                            }
+                            ) {
+                                Image(systemName: "xmark")
+                                    .foregroundColor(.black)
+                                    .font(.title)
+                                    .offset(y:-700)
+                                    .opacity(showText ? 1 : 0)
+                                    .animation(.easeInOut(duration: 1.0), value: showText)
+
+                                        
+                                }
+                                    
+                                
                             }
 
                             
                         }
+                        
                                                 
                     }
                     
@@ -185,14 +200,25 @@ struct ContentView: View {
                     }
                 }
             }
+        .onChange(of: showGlassEffect) { oldValue, newValue in
             
+            if newValue {
+                showText = true
+                                        }
+            else {
+                showText = false
+            }
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
+            
+            
+        }
+        
         
     }
-}
+
 
 #Preview {
     ContentView()
