@@ -20,18 +20,18 @@ struct ContentView: View {
     @StateObject private var pomodoroModel = PomodoroModel()
     
     @State private var exitEmjoji = "Ⓧ"
-
+    
     
     @Environment(\.scenePhase) private var scenePhase
     
     @State private var justOpened = false
     
     @State private var showText = false
-        
+    
     var body: some View {
         //positioning of tabs
         ZStack(alignment: .top) {
-                        
+            
             //Tab view to swipe between pages
             TabView(selection: $selectedPage) {
                 
@@ -47,7 +47,7 @@ struct ContentView: View {
                         .tag(0)
                     
                 }
-
+                
                 MemoriesView().tag(1)
                 
             }
@@ -68,7 +68,7 @@ struct ContentView: View {
                         justOpened = false
                         
                     }
-
+                    
                 }
                 
             }
@@ -114,7 +114,7 @@ struct ContentView: View {
             
             HStack {
                 //Home tab
-
+                
                 RoundedRectangle(cornerRadius: 20)
                     .fill(selectedPage == 0 ? Color.black : Color.gray)
                     .frame(
@@ -145,81 +145,70 @@ struct ContentView: View {
                             .foregroundColor(.white)
                     )
                     .animation(.easeInOut(duration: 0.1), value: selectedPage)
-                    
+                
             } //HStack ending
             .padding(.top)
             .offset(y:50)
-
+            
             // Buttons that appear at the bottom (always visible when conditions are met)
             VStack {
-                Spacer()
-                
                 if !pageState.isEditing {
                     if pomodoroModel.isStarted == false {
                         Text("Tap to continue")
-                            .padding(.bottom)
-                            .offset(y: -20)
                             .foregroundColor(.gray)
+                            .offset(y:775)
                         
-                        if showGlassEffect == true {
-                            
-                            //exit emoji
-                            Button(action: {
-                                showGlassEffect = false
-                                
-                                pomodoroModel.resetForNextSession()
-                            }
-                            ) {
-                                Image(systemName: "xmark")
-                                    .foregroundColor(.black)
-                                    .font(.title)
-                                    .offset(y:-700)
-                                    .opacity(showText ? 1 : 0)
-                                    .animation(.easeInOut(duration: 1.0), value: showText)
-
-                                        
-                                }
-                                    
-                                
-                            }
-
-                            
-                        }
-                        
-                                                
                     }
-                    
-                    if pomodoroModel.isStarted {
+                    else {
                         Text("Tap to stop")
-                        .padding(.bottom)
-                        .offset(y: -20)
-                        .foregroundColor(.gray)
-                        
-                                
-
+                            .foregroundColor(.gray)
+                            .offset(y:775)
                     }
                 }
+                
+                if !pageState.isEditing && showGlassEffect == true {
+                    
+                    //exit emoji
+                    Button(action: {
+                        showGlassEffect = false
+                        
+                        pomodoroModel.resetForNextSession()
+                    }
+                           
+                    ) {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.black)
+                            .font(.title)
+                            .opacity(showText ? 1 : 0)
+                            .animation(.easeInOut(duration: 1.5), value: showText)
+                    }
+                    .position(x: 200, y:100)
+                }
+
             }
+                        
+            
+            
+            
+        }
         .onChange(of: showGlassEffect) { oldValue, newValue in
             
             if newValue {
                 showText = true
-                                        }
+            }
             else {
                 showText = false
             }
-            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
-            
-            
-        }
-        
+
         
     }
+        
+}
 
-
+        
 #Preview {
     ContentView()
 }
