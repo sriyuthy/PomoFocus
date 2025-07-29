@@ -89,6 +89,7 @@ class PomodoroModel: ObservableObject {
         sessionDots[completedSessions] = true
         completedSessions += 1
         //print("Completed sessions: \(completedSessions)")
+        startBreakTimer()
         resetForNextSession()
         
     }

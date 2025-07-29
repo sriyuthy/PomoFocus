@@ -19,6 +19,13 @@ struct ContentView: View {
     
     @StateObject private var pomodoroModel = PomodoroModel()
     
+    @State private var exitEmjoji = "🆇"
+    
+    @Environment(\.scenePhase) private var scenePhase
+    
+    @State private var justOpened = false
+    
+    
     var body: some View {
         //positioning of tabs
         ZStack(alignment: .top) {
@@ -33,14 +40,40 @@ struct ContentView: View {
                 
                 //if user is editing the timer they can swipe to the otherwise hidden break timer
                 if pageState.isEditing {
-                    BreakView().tag(0)
+                    BreakView(showGlassEffect: $showGlassEffect)
+                        .environmentObject(pageState)
+                        .tag(0)
+                    
                 }
 
                 MemoriesView().tag(1)
                 
             }
+            
+            //Shrinks tab after 0.75 seconds after opening app
+            .onChange(of: scenePhase) { oldPhase, newPhase in
+                
+                if newPhase == .active {
+                    
+                    justOpened = true
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                        
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            isExpanded = false
+                        }
+                        
+                        justOpened = false
+                        
+                    }
+
+                }
+                
+            }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) //hide dots at the bottom
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            
             //.offset(y:100)
             
             
@@ -51,10 +84,10 @@ struct ContentView: View {
                     isExpanded = true
                 }
                 
-                //Tab shrinks after 2 seconds if selected page and new page are the same
+                //Tab shrinks after 0.75 seconds if selected page and new page are the same
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
                     
-                    if selectedPage == newValue {
+                    if justOpened || selectedPage == newValue {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             isExpanded = false
                         }
@@ -70,9 +103,16 @@ struct ContentView: View {
                 .ignoresSafeArea()
                 .opacity(showGlassEffect ? 1 : 0)
                 .animation(.easeInOut(duration: 0.5), value: showGlassEffect)
+                .onTapGesture {
+                    
+                    pomodoroModel.startTimer()
+                    showGlassEffect = false
+                    
+                }
             
             HStack {
                 //Home tab
+
                 RoundedRectangle(cornerRadius: 20)
                     .fill(selectedPage == 0 ? Color.black : Color.gray)
                     .frame(
@@ -114,26 +154,38 @@ struct ContentView: View {
                 
                 if !pageState.isEditing {
                     if pomodoroModel.isStarted == false {
-                        Button("Tap to continue") {
-                            pomodoroModel.startTimer()
-                            showGlassEffect = false
+                        Text("Tap to continue")
+                            .padding(.bottom)
+                            .offset(y: -20)
+                            .foregroundColor(.gray)
+                        
+                        if showGlassEffect == true {
+                            
+                            Button(action: {
+                                showGlassEffect = false
+                                pomodoroModel.resetForNextSession()
+                            }) {
+                                Text(exitEmjoji)
+                                    .font(.system(size: 30))
+                            }
+
+                            
                         }
-                        .padding(.bottom)
-                        .foregroundColor(.gray)
+                                                
                     }
                     
                     if pomodoroModel.isStarted {
-                        Button("Tap to stop") {
-                            pomodoroModel.stopTimer()
-                            showGlassEffect = true
-                        }
+                        Text("Tap to stop")
                         .padding(.bottom)
+                        .offset(y: -20)
                         .foregroundColor(.gray)
+                        
+                                
+
                     }
                 }
-                
-                
             }
+            
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

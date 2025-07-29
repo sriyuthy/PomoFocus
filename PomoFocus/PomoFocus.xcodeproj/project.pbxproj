@@ -108,11 +108,11 @@
 			children = (
 				0C68A1B12E28443A00713581 /* LoginView.swift */,
 				0CA62BEA2E1629BA00FD560C /* ContentView.swift */,
+				0C0163432E305021008ACA38 /* BreakView.swift */,
 				0CA62C142E19EB9B00FD560C /* HomeView.swift */,
 				0C0163452E305CDE008ACA38 /* PageState.swift */,
 				0CA62C182E19EFD700FD560C /* PomodoroModel.swift */,
 				0CA62BE82E1629BA00FD560C /* PomoFocusApp.swift */,
-				0C0163432E305021008ACA38 /* BreakView.swift */,
 				0CA62C162E19EC5400FD560C /* MemoriesView.swift */,
 				0CA62BEC2E1629BC00FD560C /* Assets.xcassets */,
 				0CA62BEE2E1629BC00FD560C /* Preview Content */,

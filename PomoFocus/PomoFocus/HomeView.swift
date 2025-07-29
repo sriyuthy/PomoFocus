@@ -25,6 +25,7 @@ struct HomeView: View {
     //Shared variable for tracking glass effect
     @Binding var showGlassEffect: Bool
     
+    
     //True if user is not editing aspects of timer
     var isReady: Bool {
         
@@ -42,17 +43,39 @@ struct HomeView: View {
         
         ZStack() {
             //Click off menu to finish editing covers entire background
-            if pageState.isEditing {
-                //Invisible
-                Color.black.opacity(0.001)
-                    .ignoresSafeArea()
-                    .onTapGesture {
+            //Invisible
+            Color.black.opacity(0.001)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    
+                    if pageState.isEditing {
                         //Exit editing mode when tapping the background
                         pomodoroModel.setTime(minute: pomodoroModel.minute, second: pomodoroModel.second)
                         pageState.isEditing = false
+                        showGlassEffect = false
+                        
                     }
-            }
+                    else if pomodoroModel.isStarted {
+                        
+                        showGlassEffect = true
+                        pomodoroModel.stopTimer()
+                        //print("trying to start the timer again!")
             
+                        
+                    }
+                    else {
+                        
+                        pomodoroModel.startTimer()
+                        
+                    }
+                    
+                    
+                    
+                }
+            
+            
+            
+                        
             //Main vertical layout
             VStack() {
                 
@@ -164,4 +187,12 @@ struct HomeView: View {
         .ignoresSafeArea()
     
     }
+}
+
+#Preview {
+    HomeView(
+        pomodoroModel: PomodoroModel(),
+        showGlassEffect: .constant(false)
+    )
+    .environmentObject(PageState()) // Provide the required PageState environment object
 }
