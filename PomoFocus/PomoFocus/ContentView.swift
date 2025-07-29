@@ -19,14 +19,12 @@ struct ContentView: View {
     
     @StateObject private var pomodoroModel = PomodoroModel()
     
-    @State private var exitEmjoji = "Ⓧ"
-    
-    
     @Environment(\.scenePhase) private var scenePhase
     
     @State private var justOpened = false
     
     @State private var showText = false
+    
     
     var body: some View {
         //positioning of tabs
@@ -150,20 +148,22 @@ struct ContentView: View {
             .padding(.top)
             .offset(y:50)
             
-            // Buttons that appear at the bottom (always visible when conditions are met)
+            // Text that appears at the bottom
             VStack {
-                if !pageState.isEditing {
-                    if pomodoroModel.isStarted == false {
-                        Text("Tap to continue")
-                            .foregroundColor(.gray)
-                            .offset(y:775)
-                        
-                    }
-                    else {
-                        Text("Tap to stop")
-                            .foregroundColor(.gray)
-                            .offset(y:775)
-                    }
+                    
+                //If timer hasnt started then tap to continue appears, else tap to stop appears
+                    Text("Tap to continue")
+                        .foregroundColor(.gray)
+                        .opacity((pageState.isEditingText || pomodoroModel.isStarted) ? 0: 1)
+                        .animation(.easeInOut(duration: 0.1), value: pageState.isEditingText)
+                        .offset(y:775)
+                    
+                
+                    Text("Tap to stop")
+                        .foregroundColor(.gray)
+                        .opacity(pomodoroModel.isStarted ? 1 : 0)
+                        .offset(y:753)
+                    
                 }
                 
                 if !pageState.isEditing && showGlassEffect == true {
@@ -180,7 +180,7 @@ struct ContentView: View {
                             .foregroundColor(.black)
                             .font(.title)
                             .opacity(showText ? 1 : 0)
-                            .animation(.easeInOut(duration: 1.5), value: showText)
+                            .animation(.easeInOut(duration: 1.2), value: showText)
                     }
                     .position(x: 200, y:100)
                 }
@@ -190,7 +190,7 @@ struct ContentView: View {
             
             
             
-        }
+        
         .onChange(of: showGlassEffect) { oldValue, newValue in
             
             if newValue {

@@ -12,5 +12,7 @@ import SwiftUI
 class PageState : ObservableObject {
     //Tracks if user is editing timer
     @Published var isEditing = false
+    
+    @Published var isEditingText = false
 }
 

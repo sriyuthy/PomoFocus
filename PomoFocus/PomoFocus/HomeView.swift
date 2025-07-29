@@ -20,18 +20,18 @@ struct HomeView: View {
     @State var textInput = ""
     
     //True if user is editing text field
-    @FocusState var isEditingText: Bool
+    //@FocusState var isEditingText: Bool
     
     //Shared variable for tracking glass effect
     @Binding var showGlassEffect: Bool
     
-    
     //True if user is not editing aspects of timer
     var isReady: Bool {
         
-        return !pageState.isEditing && !isEditingText
+        return !pageState.isEditing && !pageState.isEditingText
         
     }
+    
     
     //for tab view
     @State private var selectedTab = 0
@@ -68,9 +68,6 @@ struct HomeView: View {
                         pomodoroModel.startTimer()
                         
                     }
-                    
-                    
-                    
                 }
             
             
@@ -91,7 +88,8 @@ struct HomeView: View {
                         
                         //user sees message when they are editing picker
                         Text("Swipe to edit break timer")
-                            .offset(y: 360)
+                            .offset(y: 410)
+                            .foregroundColor(Color.gray)
                         
                         //Layout for min/sec wheels
                         HStack(spacing: 10) {
@@ -144,12 +142,14 @@ struct HomeView: View {
                 
                 
                 //Task description editor
-                TextField("Enter task description", text: $textInput)
+                TextField("Enter task description", text: $textInput, onEditingChanged: { editing in
+                    pageState.isEditingText = editing
+                })
                     .multilineTextAlignment(.center)
                     .font(.system(size: 25, weight: .regular))
                     .padding(.top, 10)
                     .padding(.horizontal)
-                    .focused($isEditingText)
+                    //.focused($pageState.isEditingText)
                 
                 //Dots
                 HStack(spacing: 15) {
