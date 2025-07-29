@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+//test test test
 struct ContentView: View {
     //selected page tracks home as 0 and memories as 1
     @State private var selectedPage = 0
