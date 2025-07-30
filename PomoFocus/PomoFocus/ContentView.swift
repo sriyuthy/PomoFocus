@@ -152,9 +152,9 @@ struct ContentView: View {
             VStack {
                     
                 //If timer hasnt started then tap to continue appears, else tap to stop appears
-                    Text("Tap to continue")
+                    Text("Tap to start")
                         .foregroundColor(.gray)
-                        .opacity((pageState.isEditingText || pomodoroModel.isStarted) ? 0: 1)
+                        .opacity((pageState.isEditingText || pomodoroModel.isStarted || pageState.isEditing) ? 0: 1)
                         .animation(.easeInOut(duration: 0.1), value: pageState.isEditingText)
                         .offset(y:775)
                     

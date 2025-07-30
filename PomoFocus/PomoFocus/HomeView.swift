@@ -8,8 +8,25 @@
 import Foundation
 import SwiftUI
 
+extension Color {
+    func lighter(by amount: Double = 0.3) -> Color {
+        let uiColor = UIColor(self)
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        uiColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        
+        // Increase brightness to make it lighter
+        brightness = min(brightness + CGFloat(amount), 1.0)
+        
+        return Color(UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha))
+    }
+}
+
+
 struct HomeView: View {
-    
     
     //Creates environment object for page state
     @EnvironmentObject var pageState : PageState
@@ -32,7 +49,6 @@ struct HomeView: View {
         
     }
     
-    
     //for tab view
     @State private var selectedTab = 0
     
@@ -53,14 +69,11 @@ struct HomeView: View {
                         pomodoroModel.setTime(minute: pomodoroModel.minute, second: pomodoroModel.second)
                         pageState.isEditing = false
                         showGlassEffect = false
-                        
                     }
                     else if pomodoroModel.isStarted {
                         
                         showGlassEffect = true
                         pomodoroModel.stopTimer()
-                        //print("trying to start the timer again!")
-            
                         
                     }
                     else {
@@ -70,22 +83,45 @@ struct HomeView: View {
                     }
                 }
             
-            
-            
-                        
             //Main vertical layout
             VStack() {
                 
                 //Timer display section
                 ZStack() {
                     
+                    //Dots
+                    HStack(spacing: 15) {
+                        Circle()
+                            .fill(pomodoroModel.sessionDots[0] == true ? Color.black : Color.gray)
+                            .frame(width: 15, height: 15)
+                            .offset(y: 70)
+                        
+                        Circle()
+                            .fill(pomodoroModel.sessionDots[1] == true ? Color.black : Color.gray)
+                            .frame(width: 15, height: 15)
+                            .offset(y: 70)
+                        
+                        Circle()
+                            .fill(pomodoroModel.sessionDots[2] == true ? Color.black : Color.gray)
+                            .frame(width: 15, height: 15)
+                            .offset(y: 70)
+                        
+                        Circle()
+                            .fill(pomodoroModel.sessionDots[3] == true ? Color.black : Color.gray)
+                            .frame(width: 15, height: 15)
+                            .offset(y: 70)
+                        
+                    }
+                    .padding(.horizontal, 5)
+
+                    
                     //If editing, show rectangle
                     if pageState.isEditing {
                         
                         RoundedRectangle(cornerRadius: 15)
-                            .fill(Color.gray)
+                            .fill(Color(red: 0.9, green: 0.9, blue: 0.9))
                             .frame(width: 320, height: 200)
-                        
+                            
                         //user sees message when they are editing picker
                         Text("Swipe to edit break timer")
                             .offset(y: 410)
@@ -119,7 +155,6 @@ struct HomeView: View {
                             //Do nothing
                         }
                         
-                        
                     } //if statement ending
                     else {
                         //Default timer string
@@ -151,31 +186,7 @@ struct HomeView: View {
                     .padding(.horizontal)
                     //.focused($pageState.isEditingText)
                 
-                //Dots
-                HStack(spacing: 15) {
-                    Circle()
-                        .fill(pomodoroModel.sessionDots[0] == true ? Color.black : Color.gray)
-                        .frame(width: 15, height: 15)
-                        .offset(y: 190)
-                    
-                    Circle()
-                        .fill(pomodoroModel.sessionDots[1] == true ? Color.black : Color.gray)
-                        .frame(width: 15, height: 15)
-                        .offset(y: 190)
-                    
-                    Circle()
-                        .fill(pomodoroModel.sessionDots[2] == true ? Color.black : Color.gray)
-                        .frame(width: 15, height: 15)
-                        .offset(y: 190)
-                    
-                    Circle()
-                        .fill(pomodoroModel.sessionDots[3] == true ? Color.black : Color.gray)
-                        .frame(width: 15, height: 15)
-                        .offset(y: 190)
-                    
-                }
-                .padding(.horizontal, 5)
-                
+                                
                 //Pushes everything afterwards down
                 Spacer()
                 
@@ -185,6 +196,7 @@ struct HomeView: View {
         } //ZStack ending - root
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
+      
     
     }
 }
