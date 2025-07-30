@@ -18,7 +18,7 @@ class PomodoroModel: ObservableObject {
     @Published var minute: Int = 25
     @Published var second: Int = 0
     
-    @Published var originalMin: Int = 0
+    @Published var originalMin: Int = 25
     @Published var originalSec: Int = 0
     
     @Published var totalSeconds: Int = 0

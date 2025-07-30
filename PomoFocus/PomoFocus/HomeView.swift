@@ -54,7 +54,7 @@ struct HomeView: View {
     
     //True if timer is started
     @State var isStarted = false
-    
+        
     var body: some View {
         
         ZStack() {
@@ -86,34 +86,48 @@ struct HomeView: View {
             //Main vertical layout
             VStack() {
                 
+                
+                
                 //Timer display section
                 ZStack() {
                     
                     //Dots
                     HStack(spacing: 15) {
                         Circle()
-                            .fill(pomodoroModel.sessionDots[0] == true ? Color.black : Color.gray)
+                            .fill(pomodoroModel.sessionDots[0] == true ? Color.green : Color.gray)
                             .frame(width: 15, height: 15)
                             .offset(y: 70)
                         
                         Circle()
-                            .fill(pomodoroModel.sessionDots[1] == true ? Color.black : Color.gray)
+                            .fill(pomodoroModel.sessionDots[1] == true ? Color.green : Color.gray)
                             .frame(width: 15, height: 15)
                             .offset(y: 70)
                         
                         Circle()
-                            .fill(pomodoroModel.sessionDots[2] == true ? Color.black : Color.gray)
+                            .fill(pomodoroModel.sessionDots[2] == true ? Color.green : Color.gray)
                             .frame(width: 15, height: 15)
                             .offset(y: 70)
                         
                         Circle()
-                            .fill(pomodoroModel.sessionDots[3] == true ? Color.black : Color.gray)
+                            .fill(pomodoroModel.sessionDots[3] == true ? Color.green : Color.gray)
                             .frame(width: 15, height: 15)
                             .offset(y: 70)
                         
                     }
                     .padding(.horizontal, 5)
+                    
+                    if !pomodoroModel.isStarted {
+                        Button(action: {
+                            pomodoroModel.resetForNextSession()                        }
 
+                        ) {
+                            Image(systemName: "clock")
+                                .foregroundColor(.black)
+                                .font(.title)
+                        }
+                        .position(x: 200, y: -150)
+
+                    }
                     
                     //If editing, show rectangle
                     if pageState.isEditing {
@@ -122,10 +136,12 @@ struct HomeView: View {
                             .fill(Color(red: 0.9, green: 0.9, blue: 0.9))
                             .frame(width: 320, height: 200)
                             
-                        //user sees message when they are editing picker
-                        Text("Swipe to edit break timer")
-                            .offset(y: 410)
-                            .foregroundColor(Color.gray)
+//                        //user sees message when they are editing picker
+//                        Text("Swipe to edit break timer")
+//                            .offset(y: 410)
+//                            .foregroundColor(Color.gray)
+                        
+                        
                         
                         //Layout for min/sec wheels
                         HStack(spacing: 10) {

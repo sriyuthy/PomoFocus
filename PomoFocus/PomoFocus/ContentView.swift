@@ -24,8 +24,7 @@ struct ContentView: View {
     @State private var justOpened = false
     
     @State private var showText = false
-    
-    
+        
     var body: some View {
         //positioning of tabs
         ZStack(alignment: .top) {
@@ -38,13 +37,6 @@ struct ContentView: View {
                     .environmentObject(pageState)
                     .tag(0)
                 
-                //if user is editing the timer they can swipe to the otherwise hidden break timer
-                if pageState.isEditing {
-                    BreakView(showGlassEffect: $showGlassEffect)
-                        .environmentObject(pageState)
-                        .tag(0)
-                    
-                }
                 
                 MemoriesView().tag(1)
                 
@@ -72,6 +64,14 @@ struct ContentView: View {
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) //hide dots at the bottom
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if selectedPage == 2 {
+                            return
+                        }
+                    }
+            )
             
             
             //.offset(y:100)
@@ -182,7 +182,7 @@ struct ContentView: View {
                             .opacity(showText ? 1 : 0)
                             .animation(.easeInOut(duration: 1.2), value: showText)
                     }
-                    .position(x: 200, y:100)
+                    .position(x: 200, y:130)
                 }
 
             }
