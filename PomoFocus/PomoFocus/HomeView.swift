@@ -54,7 +54,7 @@ struct HomeView: View {
     
     //True if timer is started
     @State var isStarted = false
-        
+            
     var body: some View {
         
         ZStack() {
@@ -86,8 +86,6 @@ struct HomeView: View {
             //Main vertical layout
             VStack() {
                 
-                
-                
                 //Timer display section
                 ZStack() {
                     
@@ -118,10 +116,17 @@ struct HomeView: View {
                     
                     if !pomodoroModel.isStarted {
                         Button(action: {
-                            pomodoroModel.resetForNextSession()                        }
-
+                            pomodoroModel.breakView.toggle()
+                            print("toggled")
+                            if pomodoroModel.breakView {
+                                pomodoroModel.updateTimerString(minute: pomodoroModel.breakMin, second: pomodoroModel.breakSec)
+                            }
+                            else {
+                                pomodoroModel.updateTimerString(minute: pomodoroModel.minute, second: pomodoroModel.second)
+                            }
+                        }
                         ) {
-                            Image(systemName: "clock")
+                            Image(systemName: pomodoroModel.breakView ? "house" : "clock")
                                 .foregroundColor(.black)
                                 .font(.title)
                         }
@@ -147,7 +152,7 @@ struct HomeView: View {
                         HStack(spacing: 10) {
                             
                             //Spinning wheel to select minutes
-                            Picker("Minutes", selection: $pomodoroModel.minute) {
+                            Picker("Minutes", selection: pomodoroModel.breakView ? $pomodoroModel.breakMin : $pomodoroModel.minute) {
                                 //Creates a text item for each minute in between 0 and 60
                                 ForEach(0..<60) { minute in
                                     Text("\(minute) min").tag(minute)
@@ -155,9 +160,22 @@ struct HomeView: View {
                             }
                             .pickerStyle(.wheel)
                             .frame(width: 200, height: 200)
+                            .onChange(of: pomodoroModel.breakView ? pomodoroModel.breakMin : pomodoroModel.minute) {
+                                
+                                if pomodoroModel.breakView {
+                                    pomodoroModel.setBreakTime(minute: pomodoroModel.breakMin, second: pomodoroModel.breakSec)
+                                    pomodoroModel.updateTimerString(minute: pomodoroModel.breakMin, second: pomodoroModel.breakSec)
+
+                                }
+                                else {
+                                    pomodoroModel.setTime(minute: pomodoroModel.minute, second: pomodoroModel.second)
+                                    pomodoroModel.updateTimerString(minute: pomodoroModel.minute, second: pomodoroModel.second)
+
+                                }
+                            }
                             
                             //Same thing but for seconds
-                            Picker("Seconds", selection: $pomodoroModel.second) {
+                            Picker("Seconds", selection: pomodoroModel.breakView ? $pomodoroModel.breakSec: $pomodoroModel.second) {
                                 //Creates a text item for each minute in between 0 and 60
                                 ForEach(0..<60) { second in
                                     Text("\(second) sec").tag(second)
@@ -165,6 +183,18 @@ struct HomeView: View {
                             }
                             .pickerStyle(.wheel)
                             .frame(width: 100, height: 100)
+                            .onChange(of: pomodoroModel.breakView ? pomodoroModel.breakSec : pomodoroModel.second) {
+                                
+                                if pomodoroModel.breakView {
+                                    pomodoroModel.setBreakTime(minute: pomodoroModel.breakMin, second: pomodoroModel.breakSec)
+                                    pomodoroModel.updateTimerString(minute: pomodoroModel.breakMin, second: pomodoroModel.breakSec)
+                                }
+                                else {
+                                    pomodoroModel.setTime(minute: pomodoroModel.minute, second: pomodoroModel.second)
+                                    pomodoroModel.updateTimerString(minute: pomodoroModel.minute, second: pomodoroModel.second)
+
+                                }
+                            }
                         }
                         //on tap gesture for pickers is first recognized by this, which does nothing, as opposed to the one in the background
                         .onTapGesture {

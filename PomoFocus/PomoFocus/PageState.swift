@@ -14,5 +14,6 @@ class PageState : ObservableObject {
     @Published var isEditing = false
     
     @Published var isEditingText = false
+    
 }
 

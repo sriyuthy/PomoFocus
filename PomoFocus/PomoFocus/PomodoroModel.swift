@@ -13,6 +13,7 @@ class PomodoroModel: ObservableObject {
     //Published - re-render any view that uses this when the value changes
     @Published var progress: CGFloat = 1
     @Published var timerStringValue: String = "25:00"
+    
     @Published var isStarted: Bool = false
     
     @Published var minute: Int = 25
@@ -20,6 +21,12 @@ class PomodoroModel: ObservableObject {
     
     @Published var originalMin: Int = 25
     @Published var originalSec: Int = 0
+    
+    @Published var breakMin: Int = 5
+    @Published var breakSec: Int = 0
+    
+    @Published var originalBreakMin: Int = 5
+    @Published var originalBreakSec: Int = 0
     
     @Published var totalSeconds: Int = 0
     @Published var staticTotalSeconds: Int = 0
@@ -29,16 +36,35 @@ class PomodoroModel: ObservableObject {
     @Published var completedSessions: Int = 0
     @Published var sessionDots: [Bool] = Array(repeating:false, count: 4)
     
+    @Published var breakView = false
+        
     //Update display string with minutes and seconds
     func updateTimerString(minute: Int, second: Int) {
+                
         //Converts to formatted string
-        let minStr = String(format: "%02d", minute) // % - format specifier (substitute val), 0 - padding with leading zeroes, 2 - num digits, d - decimal integer
+        let minStr = String(format: "%02d", minute) //% - format specifier (substitute val), 0 - padding with leading zeroes, 2 - num digits, d - decimal integer
         let secStr = String(format: "%02d", second)
         //Update display string
         timerStringValue = "\(minStr):\(secStr)"
         
-        //print(timerStringValue)
+        print(timerStringValue)
         
+    }
+    
+    func updateDisplayForCurrentMode() {
+        if breakView {
+            updateTimerString(minute: breakMin, second: breakSec)
+        }
+        else {
+            updateTimerString(minute: minute, second: second)
+        }
+    }
+    
+    func setBreakTime(minute: Int, second: Int) {
+        self.breakMin = minute
+        self.breakSec = second
+        self.originalBreakMin = minute
+        self.originalBreakSec = second
     }
     
     func updateStandardTime(minute: Int, second: Int) {
@@ -70,7 +96,6 @@ class PomodoroModel: ObservableObject {
         self.minute = minute
         self.second = second
         updateStandardTime(minute: minute, second: second)
-        updateTimerString(minute: minute, second: second)
         
     }
     
@@ -105,18 +130,34 @@ class PomodoroModel: ObservableObject {
     //update timer values
     func updateTimer() {
         totalSeconds -= 1
-        minute = (totalSeconds / 60) % 60
-        second = totalSeconds % 60
-        updateTimerString(minute: minute, second: second)
         
+        if breakView {
+            breakMin = (totalSeconds / 60) % 60
+            breakSec = totalSeconds % 60
+            updateTimerString(minute: breakMin, second: breakSec)
+
+        }
+        else {
+            minute = (totalSeconds / 60) % 60
+            second = totalSeconds % 60
+            updateTimerString(minute: minute, second: second)
+
+        }
+                
         
-        if minute == 0 && second == 0 {
+        if totalSeconds <= 0 {
             isStarted = false
             stopTimer()
-            completeSession()
-            startBreakTimer()
+            
+            if breakView {
+                breakView = false
+                updateTimerString(minute: minute, second: second)
+            }
+            else {
+                completeSession()
+            }
+            
         }
-        
         //If timer runs out, print "Finished"
         if completedSessions == sessionDots.count {
             
@@ -133,7 +174,13 @@ class PomodoroModel: ObservableObject {
         }
         
         //Calculates total amount of seconds
-        totalSeconds = (minute * 60) + second
+        if breakView {
+            totalSeconds = (breakMin * 60) + breakSec
+        }
+        else {
+            totalSeconds = (minute * 60) + second
+        }
+        
         staticTotalSeconds = totalSeconds
                 
         //set timer object to update timer every second
