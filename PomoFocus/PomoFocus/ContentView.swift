@@ -122,7 +122,7 @@ struct ContentView: View {
                         (selectedPage == 0 && isExpanded) ?
                         Text("Home")
                             .foregroundColor(.white)
-                            .font(.custom("Inter", size: 17))
+                            .font(.custom("Inter-Regular", size: 17))
                             //.font(.system(size: 17))
                         : Text("")
                             .foregroundColor(.white)
@@ -139,7 +139,7 @@ struct ContentView: View {
                         (selectedPage == 1 && isExpanded) ?
                         Text("Memories")
                             .foregroundColor(.white)
-                            .font(.custom("Inter", size: 17))
+                            .font(.custom("Inter-Regular", size: 17))
                         : Text("")
                             .foregroundColor(.white)
                     )
@@ -154,7 +154,7 @@ struct ContentView: View {
                     
                 //If timer hasnt started then tap to continue appears, else tap to stop appears
                     Text("Tap to start")
-                        .font(.custom("Inter", size: 17))
+                        .font(.custom("Inter-Regular", size: 17))
                         .foregroundColor(.gray)
                         .opacity((pageState.isEditingText || pomodoroModel.isStarted || pageState.isEditing) ? 0: 1)
                         .animation(.easeInOut(duration: 0.1), value: pageState.isEditingText)
@@ -162,7 +162,7 @@ struct ContentView: View {
                     
                 
                     Text("Tap to stop")
-                        .font(.custom("Inter", size: 17))
+                        .font(.custom("Inter-Regular", size: 17))
                         .foregroundColor(.gray)
                         .opacity(pomodoroModel.isStarted ? 1 : 0)
                         .offset(y:753)
@@ -173,9 +173,11 @@ struct ContentView: View {
                     
                     //exit emoji
                     Button(action: {
+                        pageState.isPaused = false
                         showGlassEffect = false
                         
                         pomodoroModel.resetForNextSession()
+                        
                     }
                            
                     ) {

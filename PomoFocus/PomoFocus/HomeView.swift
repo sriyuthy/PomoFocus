@@ -54,7 +54,7 @@ struct HomeView: View {
     
     //True if timer is started
     @State var isStarted = false
-            
+                
     var body: some View {
         
         ZStack() {
@@ -72,8 +72,12 @@ struct HomeView: View {
                     }
                     else if pomodoroModel.isStarted {
                         
+                        pageState.isPaused = true
                         showGlassEffect = true
                         pomodoroModel.stopTimer()
+                        
+                        
+                        
                         
                     }
                     else {
@@ -114,10 +118,9 @@ struct HomeView: View {
                     }
                     .padding(.horizontal, 5)
                     
-                    if !pomodoroModel.isStarted {
+                   
                         Button(action: {
                             pomodoroModel.breakView.toggle()
-                            print("toggled")
                             if pomodoroModel.breakView {
                                 pomodoroModel.updateTimerString(minute: pomodoroModel.breakMin, second: pomodoroModel.breakSec)
                             }
@@ -126,13 +129,17 @@ struct HomeView: View {
                             }
                         }
                         ) {
-                            Image(systemName: pomodoroModel.breakView ? "house" : "clock")
+                            Image(systemName: (pomodoroModel.breakView) ? "house" : "clock")
                                 .foregroundColor(.black)
                                 .font(.title)
+                                
+                                
                         }
-                        .position(x: 200, y: -150)
+                        .opacity((!pomodoroModel.isStarted && !pageState.isPaused) ? 1 : 0)
+                        .animation(.easeInOut(duration: 0.2), value: !pomodoroModel.isStarted && !pageState.isPaused)
+                        .position(x: 200, y: -145)
 
-                    }
+                    
                     
                     //If editing, show rectangle
                     if pageState.isEditing {
@@ -140,13 +147,6 @@ struct HomeView: View {
                         RoundedRectangle(cornerRadius: 15)
                             .fill(Color(red: 0.9, green: 0.9, blue: 0.9))
                             .frame(width: 320, height: 200)
-                            
-//                        //user sees message when they are editing picker
-//                        Text("Swipe to edit break timer")
-//                            .offset(y: 410)
-//                            .foregroundColor(Color.gray)
-                        
-                        
                         
                         //Layout for min/sec wheels
                         HStack(spacing: 10) {
@@ -228,7 +228,7 @@ struct HomeView: View {
                     pageState.isEditingText = editing
                 })
                     .multilineTextAlignment(.center)
-                    .font(.custom("Inter-Regular", size: 25))
+                    .font(.custom("Inter", size: 25))
                     .padding(.top, 10)
                     .padding(.horizontal)
                     //.focused($pageState.isEditingText)
