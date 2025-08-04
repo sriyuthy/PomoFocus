@@ -34,7 +34,7 @@ class PomodoroModel: ObservableObject {
     private var timer: Timer?
     
     @Published var completedSessions: Int = 0
-    @Published var sessionDots: [Bool] = Array(repeating:false, count: 4)
+    @Published var sessionDots: [Int] = Array(repeating:0, count: 4)
     
     @Published var breakView = false
         
@@ -101,29 +101,37 @@ class PomodoroModel: ObservableObject {
     
     func resetForNextSession() {
         
-        //print("resetting for next session")
-        //print("original min is \(originalMin) and original second is \(originalSec)")
         updateTimerString(minute: originalMin, second: originalSec)
         setTime(minute: originalMin, second: originalSec)
         
     }
     
+    func resetForNextBreak() {
+        
+        updateTimerString(minute: originalBreakMin, second: originalBreakSec)
+        setBreakTime(minute: originalBreakMin, second: originalBreakSec)
+        
+    }
+
+    
     func completeSession() {
         
         
-        sessionDots[completedSessions] = true
-        completedSessions += 1
-        //print("Completed sessions: \(completedSessions)")
-        startBreakTimer()
-        resetForNextSession()
+        sessionDots[completedSessions] = 1
+        breakView = true
         
+        updateTimerString(minute: originalBreakMin, second: originalBreakSec)
+        
+        breakMin = originalBreakMin
+        breakSec = originalBreakSec
+                
     }
     
     
     func resetSessions() {
         
         completedSessions = 0
-        sessionDots = Array(repeating: false, count: 4)
+        sessionDots = Array(repeating: 0, count: 4)
         
     }
     
@@ -150,20 +158,33 @@ class PomodoroModel: ObservableObject {
             stopTimer()
             
             if breakView {
-                breakView = false
-                updateTimerString(minute: minute, second: second)
+                completeBreakSession()
             }
             else {
                 completeSession()
             }
-            
         }
+        
         //If timer runs out, print "Finished"
         if completedSessions == sessionDots.count {
             
             print("Finished")
             
         }
+    }
+    
+    func completeBreakSession() {
+        
+        sessionDots[completedSessions] = 2
+        completedSessions += 1
+        breakView = false
+        
+        updateTimerString(minute: originalMin, second: originalSec)
+        
+        minute = originalMin
+        second = originalSec
+
+        
     }
     
     //Method to start timer
@@ -205,11 +226,6 @@ class PomodoroModel: ObservableObject {
         
     }
     
-    func startBreakTimer() {
-        
-        
-        
-    }
         
         
         

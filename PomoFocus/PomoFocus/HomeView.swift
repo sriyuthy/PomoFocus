@@ -54,6 +54,17 @@ struct HomeView: View {
     
     //True if timer is started
     @State var isStarted = false
+    
+    func getColor(_ num: Int) -> Color {
+        switch num {
+        case 0: return .gray
+        case 1: return .green
+        case 2: return .black
+        default:
+            return .gray
+        }
+        
+    }
                 
     var body: some View {
         
@@ -94,24 +105,25 @@ struct HomeView: View {
                 ZStack() {
                     
                     //Dots
+                    //If 0 then gray, 1 is green (break), 2 is black (finished)
                     HStack(spacing: 15) {
                         Circle()
-                            .fill(pomodoroModel.sessionDots[0] == true ? Color.green : Color.gray)
+                            .fill(getColor(pomodoroModel.sessionDots[0]))
                             .frame(width: 15, height: 15)
                             .offset(y: 70)
                         
                         Circle()
-                            .fill(pomodoroModel.sessionDots[1] == true ? Color.green : Color.gray)
+                            .fill(getColor(pomodoroModel.sessionDots[1]))
                             .frame(width: 15, height: 15)
                             .offset(y: 70)
                         
                         Circle()
-                            .fill(pomodoroModel.sessionDots[2] == true ? Color.green : Color.gray)
+                            .fill(getColor(pomodoroModel.sessionDots[2]))
                             .frame(width: 15, height: 15)
                             .offset(y: 70)
                         
                         Circle()
-                            .fill(pomodoroModel.sessionDots[3] == true ? Color.green : Color.gray)
+                            .fill(getColor(pomodoroModel.sessionDots[3]))
                             .frame(width: 15, height: 15)
                             .offset(y: 70)
                         

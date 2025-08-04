@@ -24,7 +24,8 @@ struct ContentView: View {
     @State private var justOpened = false
     
     @State private var showText = false
-        
+    
+    
     var body: some View {
         //positioning of tabs
         ZStack(alignment: .top) {
@@ -156,7 +157,7 @@ struct ContentView: View {
                     Text("Tap to start")
                         .font(.custom("Inter-Regular", size: 17))
                         .foregroundColor(.gray)
-                        .opacity((pageState.isEditingText || pomodoroModel.isStarted || pageState.isEditing) ? 0: 1)
+                        .opacity((selectedPage == 1 || pageState.isEditingText || pomodoroModel.isStarted || pageState.isEditing) ? 0: 1)
                         .animation(.easeInOut(duration: 0.1), value: pageState.isEditingText)
                         .offset(y:775)
                     
@@ -164,7 +165,7 @@ struct ContentView: View {
                     Text("Tap to stop")
                         .font(.custom("Inter-Regular", size: 17))
                         .foregroundColor(.gray)
-                        .opacity(pomodoroModel.isStarted ? 1 : 0)
+                        .opacity((selectedPage == 0 && pomodoroModel.isStarted) ? 1 : 0)
                         .offset(y:753)
                     
                 }
