@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0C0163442E305021008ACA38 /* BreakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0163432E305021008ACA38 /* BreakView.swift */; };
 		0C0163462E305CDE008ACA38 /* PageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0163452E305CDE008ACA38 /* PageState.swift */; };
+		0C19D7922E40366A00CD0DD5 /* Inter-Italic-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C19D7912E40366A00CD0DD5 /* Inter-Italic-VariableFont_opsz,wght.ttf */; };
+		0C19D7942E40389100CD0DD5 /* Inter-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C19D7932E40389100CD0DD5 /* Inter-VariableFont_opsz,wght.ttf */; };
 		0C68A1B22E28443A00713581 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A1B12E28443A00713581 /* LoginView.swift */; };
 		0CA62BE92E1629BA00FD560C /* PomoFocusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62BE82E1629BA00FD560C /* PomoFocusApp.swift */; };
 		0CA62BEB2E1629BA00FD560C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62BEA2E1629BA00FD560C /* ContentView.swift */; };
@@ -42,6 +44,9 @@
 /* Begin PBXFileReference section */
 		0C0163432E305021008ACA38 /* BreakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakView.swift; sourceTree = "<group>"; };
 		0C0163452E305CDE008ACA38 /* PageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageState.swift; sourceTree = "<group>"; };
+		0C19D7912E40366A00CD0DD5 /* Inter-Italic-VariableFont_opsz,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Italic-VariableFont_opsz,wght.ttf"; sourceTree = "<group>"; };
+		0C19D7932E40389100CD0DD5 /* Inter-VariableFont_opsz,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-VariableFont_opsz,wght.ttf"; sourceTree = "<group>"; };
+		0C19D7972E403FF200CD0DD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0C68A1B12E28443A00713581 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		0CA62BE52E1629BA00FD560C /* PomoFocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomoFocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA62BE82E1629BA00FD560C /* PomoFocusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomoFocusApp.swift; sourceTree = "<group>"; };
@@ -106,6 +111,7 @@
 		0CA62BE72E1629BA00FD560C /* PomoFocus */ = {
 			isa = PBXGroup;
 			children = (
+				0C19D7972E403FF200CD0DD5 /* Info.plist */,
 				0C68A1B12E28443A00713581 /* LoginView.swift */,
 				0CA62BEA2E1629BA00FD560C /* ContentView.swift */,
 				0C0163432E305021008ACA38 /* BreakView.swift */,
@@ -139,6 +145,8 @@
 		0CA62C022E1629BC00FD560C /* PomoFocusUITests */ = {
 			isa = PBXGroup;
 			children = (
+				0C19D7932E40389100CD0DD5 /* Inter-VariableFont_opsz,wght.ttf */,
+				0C19D7912E40366A00CD0DD5 /* Inter-Italic-VariableFont_opsz,wght.ttf */,
 				0CA62C032E1629BC00FD560C /* PomoFocusUITests.swift */,
 				0CA62C052E1629BC00FD560C /* PomoFocusUITestsLaunchTests.swift */,
 			);
@@ -250,6 +258,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CA62BF02E1629BC00FD560C /* Preview Assets.xcassets in Resources */,
+				0C19D7922E40366A00CD0DD5 /* Inter-Italic-VariableFont_opsz,wght.ttf in Resources */,
+				0C19D7942E40389100CD0DD5 /* Inter-VariableFont_opsz,wght.ttf in Resources */,
 				0CA62BED2E1629BC00FD560C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,6 +459,7 @@
 				DEVELOPMENT_TEAM = HME8RH6YJU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PomoFocus/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -459,6 +470,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "Sriyuth-Yerramshetty.PomoFocus";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -478,6 +490,7 @@
 				DEVELOPMENT_TEAM = HME8RH6YJU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PomoFocus/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -488,6 +501,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "Sriyuth-Yerramshetty.PomoFocus";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

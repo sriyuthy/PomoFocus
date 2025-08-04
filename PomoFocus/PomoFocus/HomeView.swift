@@ -205,7 +205,8 @@ struct HomeView: View {
                     else {
                         //Default timer string
                         Text(pomodoroModel.timerStringValue)
-                            .font(.system(size: 80, weight: .bold))
+                            //.font(.system(size: 80))
+                            .font(.custom("Inter-Regular_Bold", size: 80))
                         //when you press down on timer, goes into edit mode
                             .onLongPressGesture {
                                 
@@ -227,7 +228,7 @@ struct HomeView: View {
                     pageState.isEditingText = editing
                 })
                     .multilineTextAlignment(.center)
-                    .font(.system(size: 25, weight: .regular))
+                    .font(.custom("Inter-Regular", size: 25))
                     .padding(.top, 10)
                     .padding(.horizontal)
                     //.focused($pageState.isEditingText)
