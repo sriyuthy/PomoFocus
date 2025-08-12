@@ -58,7 +58,7 @@ struct HomeView: View {
     func getColor(_ num: Int) -> Color {
         switch num {
         case 0: return .gray
-        case 1: return .green
+        case 1: return .red
         case 2: return .black
         default:
             return .gray
@@ -128,7 +128,14 @@ struct HomeView: View {
                             .offset(y: 70)
                         
                     }
+                    .onLongPressGesture {
+                        
+                        pageState.isEditingDots = true
+                        print("ediitng")
+                        
+                    }
                     .padding(.horizontal, 5)
+                    
                     
                    
                         Button(action: {

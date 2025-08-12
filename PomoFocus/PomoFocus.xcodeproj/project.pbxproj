@@ -7,11 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C0163442E305021008ACA38 /* BreakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0163432E305021008ACA38 /* BreakView.swift */; };
 		0C0163462E305CDE008ACA38 /* PageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0163452E305CDE008ACA38 /* PageState.swift */; };
 		0C19D7922E40366A00CD0DD5 /* Inter-Italic-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C19D7912E40366A00CD0DD5 /* Inter-Italic-VariableFont_opsz,wght.ttf */; };
 		0C19D7942E40389100CD0DD5 /* Inter-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C19D7932E40389100CD0DD5 /* Inter-VariableFont_opsz,wght.ttf */; };
-		0C68A1B22E28443A00713581 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68A1B12E28443A00713581 /* LoginView.swift */; };
 		0CA62BE92E1629BA00FD560C /* PomoFocusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62BE82E1629BA00FD560C /* PomoFocusApp.swift */; };
 		0CA62BEB2E1629BA00FD560C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA62BEA2E1629BA00FD560C /* ContentView.swift */; };
 		0CA62BED2E1629BC00FD560C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CA62BEC2E1629BC00FD560C /* Assets.xcassets */; };
@@ -42,12 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0C0163432E305021008ACA38 /* BreakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakView.swift; sourceTree = "<group>"; };
 		0C0163452E305CDE008ACA38 /* PageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageState.swift; sourceTree = "<group>"; };
 		0C19D7912E40366A00CD0DD5 /* Inter-Italic-VariableFont_opsz,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Italic-VariableFont_opsz,wght.ttf"; sourceTree = "<group>"; };
 		0C19D7932E40389100CD0DD5 /* Inter-VariableFont_opsz,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-VariableFont_opsz,wght.ttf"; sourceTree = "<group>"; };
 		0C19D7972E403FF200CD0DD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		0C68A1B12E28443A00713581 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		0CA62BE52E1629BA00FD560C /* PomoFocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomoFocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA62BE82E1629BA00FD560C /* PomoFocusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomoFocusApp.swift; sourceTree = "<group>"; };
 		0CA62BEA2E1629BA00FD560C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -112,9 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				0C19D7972E403FF200CD0DD5 /* Info.plist */,
-				0C68A1B12E28443A00713581 /* LoginView.swift */,
 				0CA62BEA2E1629BA00FD560C /* ContentView.swift */,
-				0C0163432E305021008ACA38 /* BreakView.swift */,
 				0CA62C142E19EB9B00FD560C /* HomeView.swift */,
 				0C0163452E305CDE008ACA38 /* PageState.swift */,
 				0CA62C182E19EFD700FD560C /* PomodoroModel.swift */,
@@ -286,9 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C0163462E305CDE008ACA38 /* PageState.swift in Sources */,
-				0C68A1B22E28443A00713581 /* LoginView.swift in Sources */,
 				0CA62C152E19EB9B00FD560C /* HomeView.swift in Sources */,
-				0C0163442E305021008ACA38 /* BreakView.swift in Sources */,
 				0CA62C172E19EC5400FD560C /* MemoriesView.swift in Sources */,
 				0CA62C192E19EFD700FD560C /* PomodoroModel.swift in Sources */,
 				0CA62BEB2E1629BA00FD560C /* ContentView.swift in Sources */,

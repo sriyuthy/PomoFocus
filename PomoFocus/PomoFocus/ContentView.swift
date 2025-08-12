@@ -25,6 +25,8 @@ struct ContentView: View {
     
     @State private var showText = false
     
+    @State private var showFirstText = true
+    
     
     var body: some View {
         //positioning of tabs
@@ -75,6 +77,8 @@ struct ContentView: View {
             )
             
             
+            
+            
             //.offset(y:100)
             
             
@@ -118,7 +122,7 @@ struct ContentView: View {
                     .fill(selectedPage == 0 ? Color.black : Color.gray)
                     .frame(
                         width: 175,
-                        height: (selectedPage == 0 && isExpanded) ? 20 : 10)
+                        height: (selectedPage == 0 && isExpanded) ? 22 : 10)
                     .overlay(
                         (selectedPage == 0 && isExpanded) ?
                         Text("Home")
@@ -135,7 +139,7 @@ struct ContentView: View {
                     .fill(selectedPage == 1 ? Color.black : Color.gray)
                     .frame(
                         width: 175,
-                        height: (selectedPage == 1 && isExpanded) ? 20 : 10)
+                        height: (selectedPage == 1 && isExpanded) ? 22 : 10)
                     .overlay(
                         (selectedPage == 1 && isExpanded) ?
                         Text("Memories")
@@ -154,10 +158,10 @@ struct ContentView: View {
             VStack {
                     
                 //If timer hasnt started then tap to continue appears, else tap to stop appears
-                    Text("Tap to start")
+                Text(showGlassEffect ? "Tap to resume": "Tap to start")
                         .font(.custom("Inter-Regular", size: 17))
                         .foregroundColor(.gray)
-                        .opacity((selectedPage == 1 || pageState.isEditingText || pomodoroModel.isStarted || pageState.isEditing) ? 0: 1)
+                        .opacity((selectedPage == 1 || pageState.isEditingText || pomodoroModel.isStarted || pageState.isEditing || showGlassEffect) ? 0: 1)
                         .animation(.easeInOut(duration: 0.1), value: pageState.isEditingText)
                         .offset(y:775)
                     
@@ -166,9 +170,32 @@ struct ContentView: View {
                         .font(.custom("Inter-Regular", size: 17))
                         .foregroundColor(.gray)
                         .opacity((selectedPage == 0 && pomodoroModel.isStarted) ? 1 : 0)
-                        .offset(y:753)
+                        .offset(y:754)
+                
+                if showGlassEffect {
+                    Text(showFirstText ? "Tap to resume" : "Hold to reset timer")
+                        .font(.custom("Inter-Regular", size: 17))
+                        .foregroundColor(.gray)
+                        .animation(.easeInOut(duration: 0.3), value: showFirstText)
+                        .offset(y:732)
+                        .onAppear() {
+                            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) 
+                            { timer in
+                                if showGlassEffect 
+                                {
+                                    showFirstText.toggle()
+                                } 
+                                else 
+                                {
+                                    timer.invalidate()
+                                }
+                            }
+                        }
+                    }
+                    
                     
                 }
+                
                 
                 if !pageState.isEditing && showGlassEffect == true {
                     
