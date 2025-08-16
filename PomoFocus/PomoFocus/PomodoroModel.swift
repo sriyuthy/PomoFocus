@@ -47,7 +47,6 @@ class PomodoroModel: ObservableObject {
         //Update display string
         timerStringValue = "\(minStr):\(secStr)"
         
-        print(timerStringValue)
         
     }
     

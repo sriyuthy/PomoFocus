@@ -114,6 +114,14 @@ struct ContentView: View {
                     showGlassEffect = false
                     
                 }
+                .onLongPressGesture {
+                    
+                    print("hello")
+                    pomodoroModel.resetForNextSession()
+                    pomodoroModel.stopTimer()
+                    showGlassEffect = false
+                    
+                }
             
             HStack {
                 //Home tab
@@ -176,7 +184,8 @@ struct ContentView: View {
                     Text(showFirstText ? "Tap to resume" : "Hold to reset timer")
                         .font(.custom("Inter-Regular", size: 17))
                         .foregroundColor(.gray)
-                        .animation(.easeInOut(duration: 0.3), value: showFirstText)
+                        .frame(width: 200)
+                        .animation(.easeInOut(duration: 0.2), value: showFirstText)
                         .offset(y:732)
                         .onAppear() {
                             Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) 
@@ -196,27 +205,27 @@ struct ContentView: View {
                     
                 }
                 
-                
-                if !pageState.isEditing && showGlassEffect == true {
-                    
-                    //exit emoji
-                    Button(action: {
-                        pageState.isPaused = false
-                        showGlassEffect = false
-                        
-                        pomodoroModel.resetForNextSession()
-                        
-                    }
-                           
-                    ) {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.black)
-                            .font(.title)
-                            .opacity(showText ? 1 : 0)
-                            .animation(.easeInOut(duration: 1.2), value: showText)
-                    }
-                    .position(x: 200, y:130)
-                }
+                //X symbol to reset timer
+//                if !pageState.isEditing && showGlassEffect == true {
+//                    
+//                    //exit emoji
+//                    Button(action: {
+//                        pageState.isPaused = false
+//                        showGlassEffect = false
+//                        
+//                        pomodoroModel.resetForNextSession()
+//                        
+//                    }
+//                           
+//                    ) {
+//                        Image(systemName: "xmark")
+//                            .foregroundColor(.black)
+//                            .font(.title)
+//                            .opacity(showText ? 1 : 0)
+//                            .animation(.easeInOut(duration: 1.2), value: showText)
+//                    }
+//                    .position(x: 200, y:130)
+//                }
 
             }
                         

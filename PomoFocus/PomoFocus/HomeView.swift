@@ -92,11 +92,12 @@ struct HomeView: View {
                         
                     }
                     else {
-                        
                         pomodoroModel.startTimer()
                         
                     }
                 }
+            
+
             
             //Main vertical layout
             VStack() {
@@ -122,18 +123,19 @@ struct HomeView: View {
                             .frame(width: 15, height: 15)
                             .offset(y: 70)
                         
+
                         Circle()
                             .fill(getColor(pomodoroModel.sessionDots[3]))
                             .frame(width: 15, height: 15)
                             .offset(y: 70)
                         
                     }
-                    .onLongPressGesture {
-                        
-                        pageState.isEditingDots = true
-                        print("ediitng")
-                        
-                    }
+//                    .onLongPressGesture {
+//                        
+//                        pageState.isEditingDots = true
+//                        print("ediitng")
+//                        
+//                    }
                     .padding(.horizontal, 5)
                     
                     
