@@ -27,6 +27,11 @@ struct ContentView: View {
     
     @State private var showFirstText = true
     
+    @State private var isHolding = false
+    
+    @State private var holdProgress: Double = 0.0
+    
+    @State private var holdTimer: Timer?
     
     var body: some View {
         //positioning of tabs
@@ -77,11 +82,6 @@ struct ContentView: View {
             )
             
             
-            
-            
-            //.offset(y:100)
-            
-            
             //Handles tab expansion/shrinking
             .onChange(of: selectedPage) {
                 let newValue = selectedPage
@@ -114,14 +114,47 @@ struct ContentView: View {
                     showGlassEffect = false
                     
                 }
-                .onLongPressGesture {
+                .gesture (DragGesture(minimumDistance: 0)
+                    .onChanged { _ in
+                        if showGlassEffect && !isHolding {
+                            startHoldProgress()
+                            
+                        }
+                    }
+                    .onEnded { _ in
+                        if isHolding {
+                            stopHoldProgress()
+                        }
+                    }
+                )
+            
+            if isHolding && showGlassEffect {
+                
+                VStack {
+                    Spacer()
                     
-                    print("hello")
-                    pomodoroModel.resetForNextSession()
-                    pomodoroModel.stopTimer()
-                    showGlassEffect = false
-                    
+                    ZStack {
+                        
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.white.opacity(0.3))
+                            .frame(width: 200, height: 8)
+                        HStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.gray)
+                                .frame(width: 200 * holdProgress, height: 8)
+                            
+                            Spacer(minLength: 0)
+                        }
+                        .frame(width: 200)
+                    }
+                    .padding(.bottom, 130)
+
                 }
+                .transition(.opacity)
+            }
+                
+
+                
             
             HStack {
                 //Home tab
@@ -205,34 +238,8 @@ struct ContentView: View {
                     
                 }
                 
-                //X symbol to reset timer
-//                if !pageState.isEditing && showGlassEffect == true {
-//                    
-//                    //exit emoji
-//                    Button(action: {
-//                        pageState.isPaused = false
-//                        showGlassEffect = false
-//                        
-//                        pomodoroModel.resetForNextSession()
-//                        
-//                    }
-//                           
-//                    ) {
-//                        Image(systemName: "xmark")
-//                            .foregroundColor(.black)
-//                            .font(.title)
-//                            .opacity(showText ? 1 : 0)
-//                            .animation(.easeInOut(duration: 1.2), value: showText)
-//                    }
-//                    .position(x: 200, y:130)
-//                }
-
             }
-                        
-            
-            
-            
-        
+                                
         .onChange(of: showGlassEffect) { oldValue, newValue in
             
             if newValue {
@@ -245,7 +252,36 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
 
+    }
+    
+    func startHoldProgress() {
+        isHolding = true
+        holdProgress = 0.0
         
+        holdTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
+            holdProgress += 0.05 / 1.0
+            
+            if holdProgress >= 1.0 {
+                holdProgress = 1.0
+                stopHoldProgress()
+                onHoldComplete()
+            }
+        }
+    }
+
+    func stopHoldProgress() {
+        holdTimer?.invalidate()
+        holdTimer = nil
+        withAnimation(.easeOut(duration: 0.2)) {
+            isHolding = false
+        }
+        holdProgress = 0.0
+    }
+
+    func onHoldComplete() {
+        pomodoroModel.resetForNextSession()
+        pomodoroModel.stopTimer()
+        showGlassEffect = false
     }
         
 }
