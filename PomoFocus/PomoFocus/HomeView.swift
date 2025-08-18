@@ -71,8 +71,8 @@ struct HomeView: View {
         ZStack() {
             //Click off menu to finish editing covers entire background
             //Invisible
-            Color.black.opacity(0.001)
-                .ignoresSafeArea()
+            Color.clear
+                .contentShape(Rectangle())
                 .onTapGesture {
                     
                     if pageState.isEditing {
@@ -96,6 +96,7 @@ struct HomeView: View {
                         
                     }
                 }
+                .zIndex(0)
             
 
             
@@ -111,31 +112,53 @@ struct HomeView: View {
                         Circle()
                             .fill(getColor(pomodoroModel.sessionDots[0]))
                             .frame(width: 15, height: 15)
+                            .frame(width: 50, height: 50)
+                            .contentShape(Rectangle())
                             .offset(y: 70)
+                            .zIndex(1)
+                            .onLongPressGesture(minimumDuration: 0.1) {
+                                print("editing dot")
+                                pageState.isEditingDots = true
+                            }
                         
                         Circle()
-                            .fill(getColor(pomodoroModel.sessionDots[1]))
+                            .fill(getColor(pomodoroModel.sessionDots[0]))
                             .frame(width: 15, height: 15)
+                            .contentShape(Rectangle())
+                            .frame(width: 50, height: 50)
                             .offset(y: 70)
+                            .zIndex(1)
+                            .onLongPressGesture(minimumDuration: 0.1) {
+                                print("editing dot")
+                                pageState.isEditingDots = true
+                            }
                         
                         Circle()
-                            .fill(getColor(pomodoroModel.sessionDots[2]))
+                            .fill(getColor(pomodoroModel.sessionDots[0]))
                             .frame(width: 15, height: 15)
+                            .contentShape(Rectangle())
+                            .frame(width: 50, height: 50)
                             .offset(y: 70)
+                            .zIndex(1)
+                            .onLongPressGesture(minimumDuration: 0.1) {
+                                print("editing dot")
+                                pageState.isEditingDots = true
+                            }
                         
 
                         Circle()
-                            .fill(getColor(pomodoroModel.sessionDots[3]))
+                            .fill(getColor(pomodoroModel.sessionDots[0]))
                             .frame(width: 15, height: 15)
+                            .contentShape(Rectangle())
+                            .frame(width: 50, height: 50)
                             .offset(y: 70)
+                            .zIndex(1)
+                            .onLongPressGesture(minimumDuration: 0.1) {
+                                print("editing dot")
+                                pageState.isEditingDots = true
+                            }
                         
                     }
-//                    .onLongPressGesture {
-//                        
-//                        pageState.isEditingDots = true
-//                        print("ediitng")
-//                        
-//                    }
                     .padding(.horizontal, 5)
                     
                     
