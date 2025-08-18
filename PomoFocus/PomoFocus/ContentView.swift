@@ -128,6 +128,7 @@ struct ContentView: View {
                     }
                 )
             
+            //Progress bar
             if isHolding && showGlassEffect {
                 
                 VStack {
@@ -136,18 +137,18 @@ struct ContentView: View {
                     ZStack {
                         
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.white.opacity(0.3))
-                            .frame(width: 200, height: 8)
+                            .fill(Color.gray.opacity(0.5))
+                            .frame(width: 100, height: 8)
                         HStack {
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(Color.gray)
-                                .frame(width: 200 * holdProgress, height: 8)
+                                .fill(Color.black)
+                                .frame(width: 100 * holdProgress, height: 8)
                             
                             Spacer(minLength: 0)
                         }
-                        .frame(width: 200)
+                        .frame(width: 100)
                     }
-                    .padding(.bottom, 130)
+                    .padding(.bottom, 65)
 
                 }
                 .transition(.opacity)
@@ -214,9 +215,10 @@ struct ContentView: View {
                         .offset(y:754)
                 
                 if showGlassEffect {
-                    Text(showFirstText ? "Tap to resume" : "Hold to reset timer")
+                    Text(showFirstText ? "Tap to resume" : "Hold to reset")
                         .font(.custom("Inter-Regular", size: 17))
                         .foregroundColor(.gray)
+                        .opacity(isHolding ? 0 : 1)
                         .frame(width: 200)
                         .animation(.easeInOut(duration: 0.2), value: showFirstText)
                         .offset(y:732)
