@@ -81,6 +81,9 @@ struct HomeView: View {
                         pageState.isEditing = false
                         showGlassEffect = false
                     }
+                    else if pageState.isEditingDots {
+                        pageState.isEditingDots = false
+                    }
                     else if pomodoroModel.isStarted {
                         
                         pageState.isPaused = true
@@ -98,68 +101,78 @@ struct HomeView: View {
                 }
                 .zIndex(0)
             
+            if pageState.isEditingDots {
+                
+                HStack() {
+                    
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(Color.gray.lighter())
+                        .frame(width: 250, height: 60)
+                        .position(x: 200, y:455)
+                    
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(Color.gray.lighter())
+                        .frame(width: 65, height: 60)
+                        .position(x: 220, y:455)
+                        .onTapGesture {
+                            print("tapped it!")
+                        }
+                    Rectangle()
+                        .fill(Color.gray)
+                        .frame(width: 3, height: 60)
+                        .position(x: 115, y:455)
 
+                    
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(Color.gray.lighter())
+                        .frame(width: 65, height: 60)
+                        .position(x: -150, y:455)
+                        .onTapGesture {
+                            print("tapped it!")
+                        }
+                    Rectangle()
+                        .fill(Color.gray)
+                        .frame(width: 3, height: 60)
+                        .position(x: -205, y:455)
+
+                    
+                }
+                
+                
+                                
+                                
+            }
             
             //Main vertical layout
             VStack() {
+                
+                
                 
                 //Timer display section
                 ZStack() {
                     
                     //Dots
                     //If 0 then gray, 1 is green (break), 2 is black (finished)
-                    HStack(spacing: 15) {
-                        Circle()
-                            .fill(getColor(pomodoroModel.sessionDots[0]))
-                            .frame(width: 15, height: 15)
-                            .frame(width: 50, height: 50)
-                            .contentShape(Rectangle())
-                            .offset(y: 70)
-                            .zIndex(1)
-                            .onLongPressGesture(minimumDuration: 0.1) {
-                                print("editing dot")
-                                pageState.isEditingDots = true
+                    HStack() {
+                        ForEach(0..<4) { index in
+                            Circle()
+                                .fill(pageState.isEditingDots ? Color.black : getColor(pomodoroModel.sessionDots[index]))
+                                .frame(width: 15, height: 15)
+                                .padding(5)
+                                .contentShape(Rectangle())
+                                .background(
+                                    Circle()
+                                        .fill(.clear)
+                                        .frame(width: 100, height: 100)
+                                )
+                                .onLongPressGesture(minimumDuration: 0.1) {
+                                    print("editing dot \(index + 1)")
+                                    pageState.isEditingDots = true
+                                }
                             }
-                        
-                        Circle()
-                            .fill(getColor(pomodoroModel.sessionDots[0]))
-                            .frame(width: 15, height: 15)
-                            .contentShape(Rectangle())
-                            .frame(width: 50, height: 50)
-                            .offset(y: 70)
-                            .zIndex(1)
-                            .onLongPressGesture(minimumDuration: 0.1) {
-                                print("editing dot")
-                                pageState.isEditingDots = true
-                            }
-                        
-                        Circle()
-                            .fill(getColor(pomodoroModel.sessionDots[0]))
-                            .frame(width: 15, height: 15)
-                            .contentShape(Rectangle())
-                            .frame(width: 50, height: 50)
-                            .offset(y: 70)
-                            .zIndex(1)
-                            .onLongPressGesture(minimumDuration: 0.1) {
-                                print("editing dot")
-                                pageState.isEditingDots = true
-                            }
-                        
-
-                        Circle()
-                            .fill(getColor(pomodoroModel.sessionDots[0]))
-                            .frame(width: 15, height: 15)
-                            .contentShape(Rectangle())
-                            .frame(width: 50, height: 50)
-                            .offset(y: 70)
-                            .zIndex(1)
-                            .onLongPressGesture(minimumDuration: 0.1) {
-                                print("editing dot")
-                                pageState.isEditingDots = true
-                            }
-                        
                     }
-                    .padding(.horizontal, 5)
+                    .position(x:195,y: 180)
+                    //.padding(.horizontal, 5)
                     
                     
                    
@@ -182,7 +195,7 @@ struct HomeView: View {
                         .opacity((!pomodoroModel.isStarted && !pageState.isPaused) ? 1 : 0)
                         .animation(.easeInOut(duration: 0.2), value: !pomodoroModel.isStarted && !pageState.isPaused)
                         .position(x: 200, y: -145)
-
+                    
                     
                     
                     //If editing, show rectangle
@@ -190,8 +203,8 @@ struct HomeView: View {
                         
                         RoundedRectangle(cornerRadius: 15)
                             .fill(Color(red: 0.9, green: 0.9, blue: 0.9))
-                            .frame(width: 320, height: 200)
-                        
+                            .frame(width: 320, height: 120)
+
                         //Layout for min/sec wheels
                         HStack(spacing: 10) {
                             
@@ -203,7 +216,7 @@ struct HomeView: View {
                                 }
                             }
                             .pickerStyle(.wheel)
-                            .frame(width: 200, height: 200)
+                            .frame(width: 200, height: 100)
                             .onChange(of: pomodoroModel.breakView ? pomodoroModel.breakMin : pomodoroModel.minute) {
                                 
                                 if pomodoroModel.breakView {
