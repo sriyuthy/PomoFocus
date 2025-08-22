@@ -18,5 +18,7 @@ class PageState : ObservableObject {
     @Published var isPaused = false
     
     @Published var isEditingDots = false
+    
+    @Published var numDots: Int = 4
 }
 

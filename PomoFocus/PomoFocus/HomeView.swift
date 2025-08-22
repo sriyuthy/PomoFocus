@@ -55,6 +55,7 @@ struct HomeView: View {
     //True if timer is started
     @State var isStarted = false
     
+    
     func getColor(_ num: Int) -> Color {
         switch num {
         case 0: return .gray
@@ -103,6 +104,8 @@ struct HomeView: View {
             
             if pageState.isEditingDots {
                 
+                
+                
                 HStack() {
                     
                     RoundedRectangle(cornerRadius: 15)
@@ -115,8 +118,12 @@ struct HomeView: View {
                         .frame(width: 65, height: 60)
                         .position(x: 220, y:455)
                         .onTapGesture {
-                            print("tapped it!")
+                            pageState.numDots += 1
+                            pomodoroModel.addDot()
+
                         }
+                    
+                    
                     Rectangle()
                         .fill(Color.gray)
                         .frame(width: 3, height: 60)
@@ -128,16 +135,37 @@ struct HomeView: View {
                         .frame(width: 65, height: 60)
                         .position(x: -150, y:455)
                         .onTapGesture {
-                            print("tapped it!")
+                            if pageState.numDots > 1 {
+                                pageState.numDots -= 1
+                                pomodoroModel.removeDot()
+                            }
+                            else {
+                                print("Error: Failed to remove dot")
+                            }
+                            
                         }
+                    
+                    
+
+                    
                     Rectangle()
                         .fill(Color.gray)
                         .frame(width: 3, height: 60)
                         .position(x: -205, y:455)
-
+                    
+                    
                     
                 }
                 
+                Image(systemName: ("minus"))
+                    .font(.system(size: 20))
+                    .padding(.bottom)
+                    .offset(x:-110,y:37)
+                
+                Image(systemName: ("plus"))
+                    .font(.system(size: 20))
+                    .padding(.bottom)
+                    .offset(x:107,y:37)
                 
                                 
                                 
@@ -154,9 +182,9 @@ struct HomeView: View {
                     //Dots
                     //If 0 then gray, 1 is green (break), 2 is black (finished)
                     HStack() {
-                        ForEach(0..<4) { index in
+                        ForEach(0..<pageState.numDots, id: \.self) { index in
                             Circle()
-                                .fill(pageState.isEditingDots ? Color.black : getColor(pomodoroModel.sessionDots[index]))
+                                .fill(pageState.isEditingDots ? Color.black : getColor(index < pomodoroModel.sessionDots.count ? pomodoroModel.sessionDots[index] : 0))
                                 .frame(width: 15, height: 15)
                                 .padding(5)
                                 .contentShape(Rectangle())

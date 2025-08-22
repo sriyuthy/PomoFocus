@@ -219,12 +219,18 @@ class PomodoroModel: ObservableObject {
         isStarted = false
     }
     
-    func addDots() {
-        
-        
-        
+    func addDot() {
+        sessionDots.append(0) // Add a gray dot
+    }
+
+    func removeDot() {
+        if sessionDots.count > 1 {
+            sessionDots.removeLast()
+        }
     }
     
+    func ensureDotCount() {
+    }
         
         
         
