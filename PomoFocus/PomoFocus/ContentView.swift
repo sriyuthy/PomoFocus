@@ -33,6 +33,10 @@ struct ContentView: View {
     
     @State private var holdTimer: Timer?
     
+    @State private var timerFinished = false
+    
+    @State private var showConfetti = false
+    
     var body: some View {
         //positioning of tabs
         ZStack(alignment: .top) {
@@ -47,6 +51,8 @@ struct ContentView: View {
                 
                 
                 MemoriesView().tag(1)
+                
+
                 
             }
             
@@ -223,13 +229,13 @@ struct ContentView: View {
                         .animation(.easeInOut(duration: 0.2), value: showFirstText)
                         .offset(y:732)
                         .onAppear() {
-                            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) 
+                            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true)
                             { timer in
-                                if showGlassEffect 
+                                if showGlassEffect
                                 {
                                     showFirstText.toggle()
-                                } 
-                                else 
+                                }
+                                else
                                 {
                                     timer.invalidate()
                                 }
@@ -238,6 +244,10 @@ struct ContentView: View {
                     }
                     
                     
+                }
+            if showConfetti {
+                ConfettiView()
+                    .allowsHitTesting(false)
                 }
                 
             }
@@ -253,8 +263,37 @@ struct ContentView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
+        .onChange(of: pomodoroModel.completedSessions) { oldValue, newValue in
+                if newValue == pomodoroModel.sessionDots.count {
+                    print("All sessions complete! Triggering confetti")
 
-    }
+                    timerFinished = true
+                }
+        }
+        .onChange(of: timerFinished) { oldValue, newValue in
+                    if newValue {
+                        triggerConfetti()
+                        print("Going to next func!")
+                        // Reset the trigger after a delay if needed
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            timerFinished = false
+                        }
+                    }
+                }
+
+    } //zstack ending
+    
+    private func triggerConfetti() {
+        print("Got to trigger confetti function!")
+            showConfetti = true
+            
+            // Hide confetti after animation completes
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                showConfetti = false
+            }
+        }
+
+    
     
     func startHoldProgress() {
         isHolding = true
@@ -286,6 +325,47 @@ struct ContentView: View {
         showGlassEffect = false
     }
         
+}
+
+struct ConfettiView: View {
+    @State private var animateConfetti = false
+    
+    var body: some View {
+        ZStack {
+            ForEach(0..<30, id: \.self) { index in
+                ConfettiPiece()
+                    .offset(
+                        x: animateConfetti ? CGFloat.random(in: -200...200) : CGFloat.random(in: -50...50),
+                        y: animateConfetti ? 1000 : -100
+                    )
+                    .animation(
+                        .linear(duration: Double.random(in: 2...4))
+                        .delay(Double.random(in: 0...1)),
+                        value: animateConfetti
+                    )
+            }
+        }
+        .onAppear {
+            animateConfetti = true
+        }
+    }
+}
+
+struct ConfettiPiece: View {
+    let colors: [Color] = [.red, .blue, .green, .yellow, .purple, .orange, .pink]
+    @State private var rotation = 0.0
+    
+    var body: some View {
+        Rectangle()
+            .fill(colors.randomElement() ?? .red)
+            .frame(width: 8, height: 4)
+            .rotationEffect(.degrees(rotation))
+            .onAppear {
+                withAnimation(.linear(duration: Double.random(in: 0.5...1.5)).repeatForever(autoreverses: false)) {
+                    rotation = 360
+                }
+            }
+    }
 }
 
         

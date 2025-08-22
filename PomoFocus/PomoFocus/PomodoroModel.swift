@@ -9,6 +9,8 @@ import Foundation
 
 //Observable - so swift can track changes in the object
 class PomodoroModel: ObservableObject {
+    //.environmentObject(PageState()) // Provide the required PageState environment object
+    
     //Timer Properties
     //Published - re-render any view that uses this when the value changes
     @Published var progress: CGFloat = 1

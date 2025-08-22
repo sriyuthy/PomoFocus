@@ -20,5 +20,6 @@ class PageState : ObservableObject {
     @Published var isEditingDots = false
     
     @Published var numDots: Int = 4
+    
 }
 
